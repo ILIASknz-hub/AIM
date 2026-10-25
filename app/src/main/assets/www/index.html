@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ar-MA" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#C1272D">
+<title>عين السوق — العون</title>
+<style>
+:root{--red:#C1272D;--red-d:#9E1F25;--green:#006233;--green-d:#004B27;--sand:#F7F3EA;--ink:#1E1E1E;--mute:#6E6A62;--line:#E4DCCB;--amber:#B26A00;--ok:#1E7A46}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:"Noto Sans Arabic","Segoe UI",Tahoma,"DejaVu Sans",sans-serif;background:var(--sand);color:var(--ink);font-size:17px;max-width:520px;margin:0 auto;position:relative}
+header{background:var(--red);color:#fff;padding:14px 16px 16px;position:sticky;top:0;z-index:5;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+header .top{display:flex;align-items:center;gap:10px}
+header .logo{width:38px;height:38px;flex:none}
+header h1{font-size:21px;line-height:1.2}
+header .sub{font-size:13px;opacity:.9;margin-top:2px}
+header .icon{margin-inline-start:auto;background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:12px;width:44px;height:44px;font-size:20px}
+header .back{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:12px;height:40px;padding:0 14px;font-size:16px;font-family:inherit}
+.stripe{height:5px;background:var(--green)}
+main{padding:14px 14px 110px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 10px;text-align:center;min-height:138px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:inherit;color:inherit;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tile:active{transform:scale(.97)}
+.tile svg{width:46px;height:46px}
+.tile b{font-size:18px}
+.tile small{font-size:12.5px;color:var(--mute)}
+.tile.wide{grid-column:span 2;min-height:84px;flex-direction:row;gap:14px}
+.badge{display:inline-block;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:20px}
+.b-red{background:#FBE3E1;color:var(--red-d)}.b-green{background:#E1F2E8;color:var(--green)}.b-amber{background:#FFF1D2;color:var(--amber)}.b-grey{background:#EEE;color:#555}
+label.l{display:block;font-size:14.5px;font-weight:700;margin:14px 2px 6px}
+input,select,textarea{width:100%;font:inherit;font-size:17px;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green)}
+textarea{min-height:90px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:22px;padding:9px 15px;font:inherit;font-size:15.5px;cursor:pointer}
+.chip.on{border-color:var(--green);background:var(--green);color:#fff;font-weight:700}
+.chip.on.red{border-color:var(--red);background:var(--red)}
+.btn{display:block;width:100%;border:none;border-radius:16px;padding:16px;font:inherit;font-size:19px;font-weight:700;color:#fff;background:var(--green);cursor:pointer;margin-top:14px}
+.btn.red{background:var(--red)}.btn.light{background:#fff;color:var(--green);border:2px solid var(--green)}
+.btn:active{opacity:.85}
+.bottom{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--sand) 30%)}
+.bottom .btn{margin:0}
+.prod{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:8px}
+.prod .dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex:none;font-size:15px}
+.prod .n{flex:1;min-width:0}
+.prod .n b{display:block;font-size:16.5px}
+.prod .n small{color:var(--mute);font-size:12.5px}
+.prod input{width:96px;text-align:center;font-weight:700;font-size:19px;padding:9px 6px;direction:ltr}
+.prod.alert{border-color:#F0B4AF;background:#FFF7F6}
+.prod.alert input{border-color:var(--red);color:var(--red-d)}
+.warn{font-size:13px;color:var(--red-d);margin-top:3px;font-weight:700}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ph{aspect-ratio:1;border-radius:12px;overflow:hidden;position:relative;background:#ddd}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph button{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(0,0,0,.6);color:#fff;font-size:16px}
+.ph.add{background:#fff;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mute);font-size:13px;cursor:pointer;gap:4px}
+.ph.add span{font-size:34px;line-height:1;color:var(--green)}
+.stepper{display:flex;align-items:center;gap:14px;justify-content:center}
+.stepper button{width:52px;height:52px;border-radius:50%;border:2px solid var(--green);background:#fff;color:var(--green);font-size:28px;font-weight:700}
+.stepper b{font-size:30px;min-width:50px;text-align:center}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.mute{color:var(--mute);font-size:13.5px}
+.item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;cursor:pointer}
+.item b{font-size:16px}
+.gps{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px dashed var(--line);border-radius:12px;padding:11px;font-size:14.5px;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--green-d);color:#fff;padding:12px 20px;border-radius:24px;font-size:16px;font-weight:700;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:opacity .3s}
+.exp{border-radius:12px;padding:12px;font-weight:700;text-align:center;font-size:16px}
+.chart{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px}
+.big{font-size:42px;font-weight:800;color:var(--red)}
+.center{text-align:center}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:60;display:flex;align-items:center;justify-content:center}
+.modal img{max-width:100%;max-height:100%}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<input id="cam" type="file" accept="image/*" capture="environment" class="hidden">
+<script>
+/* =========================================================
+   عين السوق — تطبيق العون (Auxiliaire d'autorité)
+   Fonctionne 100 % hors ligne. Données stockées dans IndexedDB.
+   ========================================================= */
+const LOGO=`<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="112" fill="#fff"/><path d="M120 150 L256 92 L392 150 Z" fill="#C1272D"/><path d="M96,150 L416,150 L416,196 Q384,236 352,196 Q320,236 288,196 Q256,236 224,196 Q192,236 160,196 Q128,236 96,196 Z" fill="#006233"/><path d="M86 318 Q256 176 426 318 Q256 460 86 318 Z" fill="#C1272D"/><circle cx="256" cy="318" r="74" fill="#fff" stroke="#006233" stroke-width="12"/><polyline points="256,272 283,355 213,304 299,304 229,355 256,272" fill="none" stroke="#006233" stroke-width="11" stroke-linejoin="round"/></svg>`;
+
+const PRODUITS=[
+ {c:'tom',a:'طماطم',f:'Tomate',u:'كيلو',col:'#C0392B'},
+ {c:'pdt',a:'بطاطا',f:'Pomme de terre',u:'كيلو',col:'#A1887F'},
+ {c:'oig',a:'بصل',f:'Oignon',u:'كيلو',col:'#8E5BA6'},
+ {c:'car',a:'خيزو',f:'Carotte',u:'كيلو',col:'#E67E22'},
+ {c:'vov',a:'لحم الغنمي',f:'Viande ovine',u:'كيلو',col:'#7B241C'},
+ {c:'vbo',a:'لحم البگري',f:'Viande bovine',u:'كيلو',col:'#922B21'},
+ {c:'pou',a:'دجاج حي',f:'Poulet vivant',u:'كيلو',col:'#B9770E'},
+ {c:'oeu',a:'بيض',f:'Œufs',u:'حبة',col:'#D4AC0D'},
+ {c:'hui',a:'زيت',f:'Huile',u:'لتر',col:'#B7950B'},
+ {c:'far',a:'الفارينة',f:'Farine',u:'كيلو',col:'#AAB7B8'},
+ {c:'mou',a:'حولي',f:'Mouton (tête)',u:'راس',col:'#5D6D7E'},
+];
+const TYPES={prix:'الأثمنة',abattage:'الذبيحة السرية',hygiene:'النظافة والسلعة',reclamation:'شكاية'};
+const SEUIL=0.15; // seuil d'alerte spéculation : +15 %
+
+/* ---------- Base de données locale (IndexedDB) ---------- */
+let DB;
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('ainsouk_mobile',1);
+ r.onupgradeneeded=()=>{const d=r.result;d.createObjectStore('records',{keyPath:'id'});d.createObjectStore('kv')};
+ r.onsuccess=()=>{DB=r.result;res()};r.onerror=()=>rej(r.error)})}
+const tx=(s,m='readonly')=>DB.transaction(s,m).objectStore(s);
+const req=r=>new Promise((res,rej)=>{r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+const kvGet=k=>req(tx('kv').get(k));
+const kvSet=(k,v)=>req(tx('kv','readwrite').put(v,k));
+const allRecords=()=>req(tx('records').getAll()).then(a=>a.sort((x,y)=>y.createdAt.localeCompare(x.createdAt)));
+const putRecord=r=>req(tx('records','readwrite').put(r));
+const delRecord=id=>req(tx('records','readwrite').delete(id));
+
+/* ---------- Utilitaires ---------- */
+const $=s=>document.querySelector(s);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const today=()=>new Date().toISOString().slice(0,10);
+const fmtDate=iso=>{const d=new Date(iso);return d.toLocaleDateString('fr-MA')+' '+d.toTimeString().slice(0,5)};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>{e.style.opacity=0;setTimeout(()=>e.remove(),300)},1800)}
+function compress(file){return new Promise(res=>{const fr=new FileReader();fr.onload=()=>{const img=new Image();img.onload=()=>{const M=1280,s=Math.min(1,M/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.72))};img.src=fr.result};fr.readAsDataURL(file)})}
+function takePhoto(){return new Promise(res=>{const i=$('#cam');i.value='';i.onchange=async()=>{if(!i.files[0])return res(null);res(await compress(i.files[0]))};i.click()})}
+function getGPS(){return new Promise(res=>{if(!navigator.geolocation)return res(null);navigator.geolocation.getCurrentPosition(p=>res({lat:+p.coords.latitude.toFixed(6),lng:+p.coords.longitude.toFixed(6),acc:Math.round(p.coords.accuracy)}),()=>res(null),{enableHighAccuracy:true,timeout:15000})})}
+
+/* ---------- État ---------- */
+let PROFIL=null, STATE={}, VIEW='home';
+function header(title,sub,back=true){return `<header><div class="top">${back?`<button class="back" onclick="go('home')">→ رجع</button>`:`<div class="logo">${LOGO}</div>`}<div><h1>${title}</h1>${sub?`<div class="sub">${sub}</div>`:''}</div>${!back?`<button class="icon" onclick="go('settings')" aria-label="الإعدادات">⚙</button>`:''}</div></header><div class="stripe"></div>`}
+async function go(v,opts={}){VIEW=v;STATE=opts;window.scrollTo(0,0);await render()}
+async function render(){const app=$('#app');app.innerHTML=await VIEWS[VIEW]();if(VIEWS[VIEW+'_after'])VIEWS[VIEW+'_after']()}
+
+/* ---------- Écrans ---------- */
+const VIEWS={};
+
+VIEWS.setup=async()=>{const p=PROFIL||{nom:'',fonction:'مقدم',annexe:'',souks:['سوق سيدي قاسم','سوق مشرع بلقصيري','سوق حد كورت','سوق جرف الملحة']};STATE.p=p;
+return `${header('مرحبا بيك','عمّر هاد المعلومات مرة وحدة',!!PROFIL)}<main>
+<div class="card center"><div style="width:84px;margin:4px auto 8px">${LOGO}</div><b style="font-size:20px">عين السوق</b><div class="mute">التطبيق ديال أعوان السلطة فالسوق الأسبوعي</div></div>
+<label class="l">السمية الكاملة</label><input id="s_nom" value="${esc(p.nom)}" placeholder="مثلا: أحمد العلوي">
+<label class="l">الصفة</label><div class="chips" id="s_fct">${['مقدم','شيخ','خليفة','قائد'].map(f=>`<button class="chip ${p.fonction===f?'on':''}" onclick="pickChip(this,'s_fct')">${f}</button>`).join('')}</div>
+<label class="l">الملحقة الإدارية / القيادة</label><input id="s_ann" value="${esc(p.annexe)}" placeholder="مثلا: قيادة ...">
+<label class="l">الأسواق اللي كتخدم فيهم (كل سوق فسطر)</label><textarea id="s_souks">${esc(p.souks.join('\n'))}</textarea>
+<button class="btn" onclick="saveSetup()">سجّل ✓</button></main>`};
+function pickChip(el,grp){document.querySelectorAll('#'+grp+' .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
+const chipVal=grp=>{const e=document.querySelector('#'+grp+' .chip.on');return e?e.textContent.trim():''};
+async function saveSetup(){const nom=$('#s_nom').value.trim(),annexe=$('#s_ann').value.trim(),souks=$('#s_souks').value.split('\n').map(s=>s.trim()).filter(Boolean);
+ if(!nom||!souks.length)return toast('عمّر السمية والأسواق');
+ PROFIL={nom,fonction:chipVal('s_fct')||'مقدم',annexe,souks,deviceId:(PROFIL&&PROFIL.deviceId)||uid()};await kvSet('profil',PROFIL);toast('تسجّل مزيان ✓');go('home')}
+VIEWS.settings=VIEWS.setup;
+
+VIEWS.home=async()=>{const recs=await allRecords();const unsent=recs.filter(r=>!r.sent).length;const t=recs.filter(r=>r.createdAt.slice(0,10)===today()).length;
+const ico={
+ prix:`<svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2" stroke-linejoin="round"><path d="M5 24 24 5h17v17L22 41z"/><circle cx="33" cy="14" r="3.2"/></svg>`,
+ ab:`<svg viewBox="0 0 48 48" fill="none" stroke="#C1272D" stroke-width="3.2" stroke-linejoin="round"><path d="M24 5 44 41H4z"/><path d="M24 18v11M24 34v1.5"/></svg>`,
+ hy:`<svg viewBox="0 0 48 48" fill="none" stroke="#B26A00" stroke-width="3.2"><rect x="7" y="10" width="34" height="31" rx="4"/><path d="M7 18h34M15 5v9M33 5v9M18 25l12 11M30 25 18 36"/></svg>`,
+ re:`<svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2" stroke-linejoin="round"><path d="M5 9h38v24H21l-10 8v-8H5z"/><path d="M13 18h22M13 25h13"/></svg>`,
+ hi:`<svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2"><path d="M6 40h36M10 34l9-11 8 6 11-15"/></svg>`,
+ se:`<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"><path d="M6 24 42 7 32 42l-8-14z"/><path d="M24 28 42 7"/></svg>`};
+return `${header('السلام، '+esc(PROFIL.fonction)+' '+esc(PROFIL.nom.split(' ')[0]),esc(PROFIL.annexe||'عين السوق')+' — '+new Date().toLocaleDateString('fr-MA'),false)}<main>
+<div class="card row"><span>${t} تسجيلات اليوم</span>${unsent?`<span class="badge b-amber">${unsent} ما تصيفطوش</span>`:`<span class="badge b-green">كلشي تصيفط</span>`}</div>
+<div class="tiles">
+ <button class="tile" onclick="go('prix')">${ico.prix}<b>الأثمنة</b><small>سجّل ثمن السلعة</small></button>
+ <button class="tile" onclick="go('abattage')">${ico.ab}<b>الذبيحة السرية</b><small>صوّر وسجّل</small></button>
+ <button class="tile" onclick="go('hygiene')">${ico.hy}<b>النظافة والسلعة</b><small>فايتة التاريخ ولا خامجة</small></button>
+ <button class="tile" onclick="go('reclamation')">${ico.re}<b>شكاية</b><small>شكاية ديال مواطن</small></button>
+ <button class="tile" onclick="go('historique')">${ico.hi}<b>تاريخ الأثمنة</b><small>شوف واش الثمن طلع</small></button>
+ <button class="tile" onclick="go('registre')"><svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 15h16M16 23h16M16 31h10"/></svg><b>السجل ديالي</b><small>${recs.length} تسجيل</small></button>
+ <button class="tile wide" style="background:var(--green);color:#fff;border:none" onclick="go('envoi')">${ico.se}<div style="text-align:right"><b style="color:#fff">صيفط للملحقة</b><br><small style="color:#E1F2E8">${unsent?unsent+' تسجيل كيتسناو':'ما كاين والو جديد'}</small></div></button>
+</div></main>`};
+
+function soukChips(id,cur){return `<div class="chips" id="${id}">${PROFIL.souks.map(s=>`<button class="chip ${s===cur?'on':''}" onclick="pickChip(this,'${id}');${id==='p_souk'?'refreshAlerts()':''}">${esc(s)}</button>`).join('')}</div>`}
+
+/* --- Prix --- */
+let PRIX_HIST={};
+async function buildHist(){const recs=(await allRecords()).filter(r=>r.type==='prix');PRIX_HIST={};
+ recs.sort((a,b)=>a.createdAt.localeCompare(b.createdAt)).forEach(r=>r.data.items.forEach(it=>{const k=r.souk+'|'+it.c;(PRIX_HIST[k]=PRIX_HIST[k]||[]).push({d:r.createdAt,p:it.p})}))}
+function moyenne(souk,c){const h=(PRIX_HIST[souk+'|'+c]||[]).slice(-4);if(!h.length)return null;return h.reduce((a,x)=>a+x.p,0)/h.length}
+VIEWS.prix=async()=>{await buildHist();const souk=STATE.souk||PROFIL.souks[0];
+return `${header('الأثمنة','الثمن اللي كيتباع بيه أكثر، بالدرهم')}<main>
+<label class="l">السوق</label>${soukChips('p_souk',souk)}
+<label class="l">السلعة (خلّي الخاوي إلا ما لقيتيش)</label>
+${PRODUITS.map(p=>`<div class="prod" id="pr_${p.c}"><div class="dot" style="background:${p.col}">${p.a[0]}</div><div class="n"><b>${p.a}</b><small>${p.f} — الدرهم / ${p.u}</small><div class="warn" id="w_${p.c}"></div></div><input inputmode="decimal" id="in_${p.c}" placeholder="—" oninput="checkPrix('${p.c}')"></div>`).join('')}
+<label class="l">ملاحظة (اختياري)</label><textarea id="p_note" placeholder="مثلا: السلعة قليلة اليوم"></textarea>
+</main><div class="bottom"><button class="btn" onclick="savePrix()">سجّل الأثمنة ✓</button></div>`};
+VIEWS.prix_after=()=>{};
+function checkPrix(c){const souk=chipVal('p_souk'),v=parseFloat(($('#in_'+c).value||'').replace(',','.'));const m=moyenne(souk,c);const row=$('#pr_'+c),w=$('#w_'+c);
+ if(!isNaN(v)&&m&&v>m*(1+SEUIL)){row.classList.add('alert');w.textContent=`رد بالك! طالع ب +${Math.round((v/m-1)*100)}% على المعدل (${m.toFixed(1)} درهم)`}else{row.classList.remove('alert');w.textContent=m&&!isNaN(v)?'':''}}
+function refreshAlerts(){PRODUITS.forEach(p=>checkPrix(p.c))}
+async function savePrix(){const souk=chipVal('p_souk');const items=[];let alerts=[];
+ for(const p of PRODUITS){const v=parseFloat(($('#in_'+p.c).value||'').replace(',','.'));if(!isNaN(v)&&v>0){const m=moyenne(souk,p.c);const al=m&&v>m*(1+SEUIL);items.push({c:p.c,p:v,moy:m?+m.toFixed(2):null,alerte:!!al});if(al)alerts.push(p.a)}}
+ if(!items.length)return toast('دخّل على الأقل ثمن واحد');
+ await putRecord({id:uid(),type:'prix',souk,createdAt:new Date().toISOString(),auteur:PROFIL,data:{items,note:$('#p_note').value.trim()},photos:[],gps:null,sent:false});
+ toast(alerts.length?'تسجّل — كاين '+alerts.length+' ثمن طالع':'تسجّل مزيان ✓');go('home')}
+
+/* --- Historique des prix --- */
+VIEWS.historique=async()=>{await buildHist();const souk=STATE.souk||PROFIL.souks[0],c=STATE.c||'tom';const p=PRODUITS.find(x=>x.c===c);const h=(PRIX_HIST[souk+'|'+c]||[]).slice(-10);
+let chart='<div class="mute center" style="padding:30px">ما كاين حتى ثمن مسجل لهاد السلعة فهاد السوق</div>';
+if(h.length){const W=340,H=180,L=34,R=10,T=14,B=26;const vals=h.map(x=>x.p),mn=Math.min(...vals)*.85,mx=Math.max(...vals)*1.1;const X=i=>L+(h.length===1?(W-L-R)/2:i*(W-L-R)/(h.length-1)),Y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn||1));
+ let g='';for(let k=0;k<=3;k++){const v=mn+(mx-mn)*k/3;g+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#EEE6D6"/><text x="${L-4}" y="${Y(v)+4}" font-size="10" text-anchor="end" fill="#888">${v.toFixed(v<20?1:0)}</text>`}
+ g+=`<polyline fill="none" stroke="#006233" stroke-width="3" points="${h.map((x,i)=>X(i)+','+Y(x.p)).join(' ')}"/>`;
+ h.forEach((x,i)=>{const prev=h.slice(Math.max(0,i-4),i);const m=prev.length?prev.reduce((a,y)=>a+y.p,0)/prev.length:null;const al=m&&x.p>m*(1+SEUIL);g+=`<circle cx="${X(i)}" cy="${Y(x.p)}" r="${al?6:4}" fill="${al?'#C1272D':'#006233'}"/><text x="${X(i)}" y="${H-8}" font-size="9.5" text-anchor="middle" fill="#888">${x.d.slice(8,10)}/${x.d.slice(5,7)}</text>`});
+ chart=`<div class="chart"><svg viewBox="0 0 ${W} ${H}" width="100%" style="direction:ltr">${g}</svg></div>`}
+const last=h[h.length-1],pv=h.slice(-5,-1),m=pv.length?pv.reduce((a,x)=>a+x.p,0)/pv.length:null;
+return `${header('تاريخ الأثمنة','واش الثمن طالع ولا نازل')}<main>
+<label class="l">السوق</label><div class="chips">${PROFIL.souks.map(s=>`<button class="chip ${s===souk?'on':''}" onclick="go('historique',{souk:'${esc(s)}',c:'${c}'})">${esc(s)}</button>`).join('')}</div>
+<label class="l">السلعة</label><select onchange="go('historique',{souk:'${esc(souk)}',c:this.value})">${PRODUITS.map(x=>`<option value="${x.c}" ${x.c===c?'selected':''}>${x.a} — ${x.f}</option>`).join('')}</select>
+<div class="card center" style="margin-top:14px"><div class="mute">آخر ثمن ديال ${p.a}</div><div class="big">${last?last.p+' <small style="font-size:18px">درهم</small>':'—'}</div><div class="mute">المعدل ديال 4 المرات اللي قبل: <b>${m?m.toFixed(2)+' درهم':'—'}</b></div></div>
+${chart}<div class="mute" style="margin-top:8px">● أحمر = ثمن طالع بأكثر من 15% على المعدل (مضاربة محتملة)</div></main>`};
+
+/* --- Photos (composant) --- */
+let PHOTOS=[];
+function photosHTML(){return `<div class="photos" id="photos">${PHOTOS.map((p,i)=>`<div class="ph"><img src="${p}" onclick="zoom(${i})"><button onclick="PHOTOS.splice(${i},1);document.getElementById('photos').outerHTML=photosHTML()">×</button></div>`).join('')}<div class="ph add" onclick="addPhoto()"><span>+</span>زيد تصويرة</div></div>`}
+async function addPhoto(){const p=await takePhoto();if(p){PHOTOS.push(p);$('#photos').outerHTML=photosHTML()}}
+function zoom(i){const m=document.createElement('div');m.className='modal';m.innerHTML=`<img src="${PHOTOS[i]}">`;m.onclick=()=>m.remove();document.body.appendChild(m)}
+let GPS=null;
+function gpsHTML(){return `<div class="gps" id="gps" onclick="doGPS()">📍 ${GPS?`البلاصة تسجلات (${GPS.lat}, ${GPS.lng})`:'ضغط هنا باش تسجل البلاصة (GPS)'}</div>`}
+async function doGPS(){$('#gps').textContent='كنقلب على البلاصة...';GPS=await getGPS();$('#gps').outerHTML=gpsHTML();if(!GPS)toast('ما قدرتش نلقى البلاصة')}
+
+/* --- Abattage clandestin --- */
+let NB=1;
+VIEWS.abattage=async()=>{PHOTOS=[];GPS=null;NB=1;return `${header('الذبيحة السرية','ورقة المعاينة — صوّر 3 تصاور على الأقل')}<main>
+<label class="l">السوق</label>${soukChips('a_souk',PROFIL.souks[0])}
+<label class="l">التصاور</label>${photosHTML()}
+<label class="l">النوع</label><div class="chips" id="a_esp">${['غنم','بگري','معز','دجاج','آخر'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'a_esp')">${e}</button>`).join('')}</div>
+<label class="l">شحال من ذبيحة</label><div class="card stepper"><button onclick="NB=Math.max(1,NB-1);$('#nb').textContent=NB">−</button><b id="nb">1</b><button onclick="NB++;$('#nb').textContent=NB">+</button></div>
+<label class="l">واش فيها الطابع ديال البيطري؟</label><div class="chips" id="a_tab"><button class="chip" onclick="pickChip(this,'a_tab')">آه، فيها</button><button class="chip on red" onclick="pickChip(this,'a_tab')">لا، ما فيهاش</button></div>
+<label class="l">البلاصة</label>${gpsHTML()}<input id="a_lieu" style="margin-top:8px" placeholder="وصف البلاصة: مثلا مور الرحبة ديال الغنم">
+<label class="l">ملاحظة</label><textarea id="a_note" placeholder="شنو شفتي؟ شكون كان كيبيع؟ (بلا أسماء إلا ما كانش ضروري)"></textarea>
+</main><div class="bottom"><button class="btn red" onclick="saveAbattage()">صيفط للقائد ✓</button></div>`};
+async function saveAbattage(){if(!PHOTOS.length)return toast('خاص على الأقل تصويرة وحدة');
+ await putRecord({id:uid(),type:'abattage',souk:chipVal('a_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{espece:chipVal('a_esp'),nombre:NB,estampille:chipVal('a_tab').startsWith('آه'),lieu:$('#a_lieu').value.trim(),note:$('#a_note').value.trim()},photos:PHOTOS.slice(),gps:GPS,sent:false});
+ toast('تسجّلات المعاينة ✓');go('home')}
+
+/* --- Hygiène / produits --- */
+VIEWS.hygiene=async()=>{PHOTOS=[];GPS=null;return `${header('النظافة والسلعة','سلعة فايتة التاريخ، خامجة، ولا بلا تبريد')}<main>
+<label class="l">السوق</label>${soukChips('h_souk',PROFIL.souks[0])}
+<label class="l">شنو المشكل؟</label><div class="chips" id="h_type">${['فايتة التاريخ','سلعة خامجة','بلا تبريد','البلاصة موسخة'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'h_type');expUI()">${e}</button>`).join('')}</div>
+<label class="l">صوّر السلعة والتيكيت ديال التاريخ</label>${photosHTML()}
+<label class="l">نوع السلعة</label><select id="h_prod">${['منتوجات الحليب','لحم ولا حوت','معلبات','مشروبات','حلويات','خضرة وفواكه','آخر'].map(x=>`<option>${x}</option>`).join('')}</select>
+<div id="expbox"><label class="l">التاريخ اللي مكتوب على التيكيت</label><input type="date" id="h_date" onchange="expUI()"><div id="h_res" style="margin-top:8px"></div></div>
+<label class="l">الكمية التقريبية</label><input id="h_qte" placeholder="مثلا: 30 علبة">
+<label class="l">ملاحظة</label><textarea id="h_note"></textarea>
+</main><div class="bottom"><button class="btn" onclick="saveHygiene()">سجّل ✓</button></div>`};
+function expInfo(d){if(!d)return null;const diff=Math.floor((new Date(d)-new Date(today()))/864e5);return diff<0?{t:`فايتة ب ${-diff} يوم`,c:'b-red',k:'perime',j:diff}:diff<=3?{t:`باقي ${diff} أيام فقط`,c:'b-amber',k:'proche',j:diff}:{t:'التاريخ مزيان',c:'b-green',k:'ok',j:diff}}
+function expUI(){const show=chipVal('h_type')==='فايتة التاريخ';$('#expbox').style.display=show?'':'none';const i=expInfo($('#h_date')&&$('#h_date').value);$('#h_res').innerHTML=i?`<div class="exp ${i.c}">${i.t}</div>`:''}
+async function saveHygiene(){const type=chipVal('h_type');const d=$('#h_date').value;if(type==='فايتة التاريخ'&&!d)return toast('دخّل التاريخ اللي على التيكيت');if(!PHOTOS.length)return toast('صوّر السلعة عافاك');
+ const i=expInfo(d);await putRecord({id:uid(),type:'hygiene',souk:chipVal('h_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{probleme:type,produit:$('#h_prod').value,datePeremption:type==='فايتة التاريخ'?d:null,etat:i?i.k:null,joursRestants:i?i.j:null,quantite:$('#h_qte').value.trim(),note:$('#h_note').value.trim()},photos:PHOTOS.slice(),gps:null,sent:false});
+ toast('تسجّل مزيان ✓');go('home')}
+
+/* --- Réclamation --- */
+VIEWS.reclamation=async()=>{PHOTOS=[];return `${header('شكاية','شكاية ديال مواطن فالسوق')}<main>
+<label class="l">السوق</label>${soukChips('r_souk',PROFIL.souks[0])}
+<label class="l">على شنو الشكاية؟</label><div class="chips" id="r_type">${['الثمن ما معلقش','ثمن غالي بزاف','الميزان ماشي مضبوط','سلعة خامجة','النظافة','حاجة أخرى'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'r_type')">${e}</button>`).join('')}</div>
+<label class="l">شرح الشكاية</label><textarea id="r_desc" placeholder="شنو قال المواطن؟"></textarea>
+<label class="l">تصويرة (اختياري)</label>${photosHTML()}
+<label class="l">رقم التلفون ديال المشتكي (اختياري)</label><input id="r_tel" inputmode="tel" style="direction:ltr;text-align:right" placeholder="06...">
+</main><div class="bottom"><button class="btn" onclick="saveRecl()">سجّل الشكاية ✓</button></div>`};
+async function saveRecl(){const desc=$('#r_desc').value.trim();if(!desc)return toast('كتب شنو هي الشكاية');const recs=await allRecords();const n=recs.filter(r=>r.type==='reclamation').length+1;
+ await putRecord({id:uid(),type:'reclamation',souk:chipVal('r_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{numero:(PROFIL.deviceId||'').slice(-3).toUpperCase()+'-'+String(n).padStart(4,'0'),objet:chipVal('r_type'),description:desc,telephone:$('#r_tel').value.trim()},photos:PHOTOS.slice(),gps:null,sent:false});
+ toast('تسجّلات الشكاية ✓');go('home')}
+
+/* --- Registre --- */
+function resume(r){const d=r.data;switch(r.type){case 'prix':return d.items.length+' سلعة'+(d.items.some(i=>i.alerte)?' — <span class="badge b-red">ثمن طالع</span>':'');case 'abattage':return d.nombre+' '+d.espece+(d.estampille?'':' — بلا طابع');case 'hygiene':return d.probleme+' — '+d.produit;case 'reclamation':return 'رقم '+d.numero+' — '+d.objet}}
+VIEWS.registre=async()=>{const recs=await allRecords();return `${header('السجل ديالي','كلشي اللي سجلتي')}<main>
+${recs.length?recs.map(r=>`<div class="item" onclick="go('detail',{id:'${r.id}'})"><div class="row"><b>${TYPES[r.type]}</b>${r.sent?'<span class="badge b-green">تصيفط</span>':'<span class="badge b-amber">ما تصيفطش</span>'}</div><div class="mute">${esc(r.souk)} — ${fmtDate(r.createdAt)}</div><div style="font-size:14.5px;margin-top:3px">${resume(r)}</div></div>`).join(''):'<div class="card center mute">ما كاين حتى تسجيل</div>'}</main>`};
+VIEWS.detail=async()=>{const r=(await allRecords()).find(x=>x.id===STATE.id);if(!r)return go('registre');PHOTOS=r.photos||[];
+const d=r.data;let body='';
+if(r.type==='prix')body=d.items.map(i=>{const p=PRODUITS.find(x=>x.c===i.c);return `<div class="row" style="padding:7px 0;border-bottom:1px solid #eee"><span>${p.a}</span><b style="${i.alerte?'color:var(--red)':''}">${i.p} درهم${i.alerte?' ▲':''}</b></div>`}).join('');
+else body=Object.entries({abattage:{'النوع':d.espece,'العدد':d.nombre,'الطابع':d.estampille?'كاين':'ما كاينش','البلاصة':d.lieu},hygiene:{'المشكل':d.probleme,'السلعة':d.produit,'تاريخ الصلاحية':d.datePeremption,'الكمية':d.quantite},reclamation:{'الرقم':d.numero,'الموضوع':d.objet,'الشرح':d.description,'التلفون':d.telephone}}[r.type]).filter(([k,v])=>v!==null&&v!=='').map(([k,v])=>`<div style="padding:7px 0;border-bottom:1px solid #eee"><span class="mute">${k}</span><div>${esc(v)}</div></div>`).join('');
+return `${header(TYPES[r.type],esc(r.souk)+' — '+fmtDate(r.createdAt))}<main><div class="card">${body}${d.note?`<div style="padding-top:8px"><span class="mute">ملاحظة</span><div>${esc(d.note)}</div></div>`:''}</div>
+${PHOTOS.length?`<div class="photos">${PHOTOS.map((p,i)=>`<div class="ph"><img src="${p}" onclick="zoom(${i})"></div>`).join('')}</div>`:''}
+${r.gps?`<div class="card mute" style="margin-top:12px">📍 ${r.gps.lat}, ${r.gps.lng} (±${r.gps.acc} م)</div>`:''}
+${!r.sent?`<button class="btn light" style="border-color:var(--red);color:var(--red)" onclick="if(confirm('واش متأكد بغيتي تمسح هاد التسجيل؟'))delRecord('${r.id}').then(()=>go('registre'))">مسح هاد التسجيل</button>`:''}</main>`};
+
+/* --- Envoi vers l'annexe (fichier) --- */
+VIEWS.envoi=async()=>{const recs=await allRecords();const un=recs.filter(r=>!r.sent);const cnt=t=>un.filter(r=>r.type===t).length;
+return `${header('صيفط للملحقة','بلا أنترنيت: كنصاوبو ملف وكنعطيوه للملحقة')}<main>
+<div class="card center"><div class="big" style="color:var(--green)">${un.length}</div><div>تسجيل كيتسناو يتصيفطو</div>
+<div class="mute" style="margin-top:6px">أثمنة: ${cnt('prix')} — ذبيحة: ${cnt('abattage')} — نظافة: ${cnt('hygiene')} — شكايات: ${cnt('reclamation')}</div></div>
+<div class="card"><b>كيفاش؟</b><div class="mute" style="font-size:15px;line-height:1.9;margin-top:6px">1. ضغط على «صاوب الملف».<br>2. الملف كيتحط فالتلفون (Download).<br>3. فالملحقة: ربط التلفون بالكابل مع البيسي، ولا صيفطو بالبلوتوث.<br>4. البيسي كيقرا الملف بوحدو.</div></div>
+<button class="btn" onclick="exporter(false)" ${un.length?'':'disabled style="opacity:.5"'}>صاوب الملف (${un.length}) ✓</button>
+<button class="btn light" onclick="exporter(true)">عاود صاوب ملف فيه كلشي (${recs.length})</button></main>`};
+async function exporter(all){const recs=await allRecords();const list=all?recs:recs.filter(r=>!r.sent);if(!list.length)return toast('ما كاين والو');
+ const payload={app:'ain-souk',version:1,exportedAt:new Date().toISOString(),auteur:PROFIL,records:list.map(r=>({...r,sent:undefined}))};
+ const stamp=new Date().toISOString().slice(0,16).replace(/[-:T]/g,'');const name=`ainsouk_${(PROFIL.nom||'aux').replace(/\s+/g,'_')}_${stamp}.json`;const txt=JSON.stringify(payload);
+ let ok=false;
+ if(window.AndroidBridge&&AndroidBridge.saveFile){ok=AndroidBridge.saveFile(name,txt)}
+ else{const f=new File([txt],name,{type:'application/json'});
+  if(navigator.canShare&&navigator.canShare({files:[f]})&&confirm('بغيتي تبارطاجي الملف (بلوتوث...)؟ — «Annuler» = تحميل عادي')){try{await navigator.share({files:[f],title:name});ok=true}catch(e){}}
+  if(!ok){const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=name;document.body.appendChild(a);a.click();a.remove();ok=true}}
+ if(ok){for(const r of list){r.sent=true;await putRecord(r)}toast('الملف واجد: '+list.length+' تسجيل ✓');go('home')}}
+
+/* ---------- Démarrage ---------- */
+(async()=>{await openDB();PROFIL=await kvGet('profil');go(PROFIL?'home':'setup')})();
+</script>
+</body></html>

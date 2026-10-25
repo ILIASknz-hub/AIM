@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="rouge_maroc">#C1272D</color>
+    <color name="vert_maroc">#006233</color>
+    <style name="Theme.AinSouk" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/rouge_maroc</item>
+        <item name="colorPrimaryDark">@color/rouge_maroc</item>
+        <item name="colorAccent">@color/vert_maroc</item>
+        <item name="android:statusBarColor">@color/rouge_maroc</item>
+    </style>
+</resources>
