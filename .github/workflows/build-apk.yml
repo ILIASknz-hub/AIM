@@ -1,6 +1,8 @@
-# Construction automatique de l'APK sur GitHub (sans installer Android Studio)
+# Construction automatique de l'APK sur GitHub, puis publication dans « Releases »
 name: Construire l'APK
 on: [push, workflow_dispatch]
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,7 +11,14 @@ jobs:
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: '17' }
       - run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - run: cp app/build/outputs/apk/debug/app-debug.apk AinSouk.apk
       - uses: actions/upload-artifact@v4
         with:
           name: AinSouk-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: AinSouk.apk
+      - name: Publier l'APK (téléchargeable depuis le téléphone)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v1.0.${{ github.run_number }}"
+          gh release create "$TAG" AinSouk.apk --title "Aïn Souk — prototype $TAG" --notes "Fichier d'installation Android. Sur le téléphone : télécharger AinSouk.apk, l'ouvrir, autoriser l'installation, puis Installer." --latest
