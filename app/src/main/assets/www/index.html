@@ -99,7 +99,6 @@ const PRODUITS=[
  {c:'mou',a:'حولي',f:'Mouton (tête)',u:'راس',col:'#5D6D7E'},
 ];
 const TYPES={prix:'الأثمنة',abattage:'الذبيحة السرية',hygiene:'النظافة والسلعة',reclamation:'شكاية'};
-const SEUIL=0.15; // seuil d'alerte spéculation : +15 %
 
 /* ---------- Base de données locale (IndexedDB) ---------- */
 let DB;
@@ -127,7 +126,7 @@ function getGPS(){return new Promise(res=>{if(!navigator.geolocation)return res(
 
 /* ---------- État ---------- */
 let PROFIL=null, STATE={}, VIEW='home';
-function header(title,sub,back=true){return `<header><div class="top">${back?`<button class="back" onclick="go('home')">→ رجع</button>`:`<div class="logo">${LOGO}</div>`}<div><h1>${title}</h1>${sub?`<div class="sub">${sub}</div>`:''}</div>${!back?`<button class="icon" onclick="go('settings')" aria-label="الإعدادات">⚙</button>`:''}</div></header><div class="stripe"></div>`}
+function header(title,sub,back=true){return `<header><div class="top">${back?`<button class="back" onclick="go('home')">→ رجع</button>`:`<div class="logo">${LOGO}</div>`}<div><h1>${title}</h1>${sub?`<div class="sub">${sub}</div>`:''}</div></div></header><div class="stripe"></div>`}
 async function go(v,opts={}){VIEW=v;STATE=opts;window.scrollTo(0,0);await render()}
 async function render(){const app=$('#app');app.innerHTML=await VIEWS[VIEW]();if(VIEWS[VIEW+'_after'])VIEWS[VIEW+'_after']()}
 
@@ -135,21 +134,21 @@ async function render(){const app=$('#app');app.innerHTML=await VIEWS[VIEW]();if
 const VIEWS={};
 
 VIEWS.setup=async()=>{const p=PROFIL||{nom:'',fonction:'مقدم',annexe:'',souks:['سوق سيدي قاسم','سوق مشرع بلقصيري','سوق حد كورت','سوق جرف الملحة']};STATE.p=p;
-return `${header('مرحبا بيك','عمّر هاد المعلومات مرة وحدة',!!PROFIL)}<main>
+return `${header('مرحبا بيك','عمّر هاد المعلومات مرة وحدة',false)}<main>
 <div class="card center"><div style="width:84px;margin:4px auto 8px">${LOGO}</div><b style="font-size:20px">عين السوق</b><div class="mute">التطبيق ديال أعوان السلطة فالسوق الأسبوعي</div></div>
 <label class="l">السمية الكاملة</label><input id="s_nom" value="${esc(p.nom)}" placeholder="مثلا: أحمد العلوي">
 <label class="l">الصفة</label><div class="chips" id="s_fct">${['مقدم','شيخ','خليفة','قائد'].map(f=>`<button class="chip ${p.fonction===f?'on':''}" onclick="pickChip(this,'s_fct')">${f}</button>`).join('')}</div>
 <label class="l">الملحقة الإدارية / القيادة</label><input id="s_ann" value="${esc(p.annexe)}" placeholder="مثلا: قيادة ...">
 <label class="l">الأسواق اللي كتخدم فيهم (كل سوق فسطر)</label><textarea id="s_souks">${esc(p.souks.join('\n'))}</textarea>
+<div class="mute" style="margin-top:10px">هاد المعلومات كتعمّر مرة وحدة مع الملحقة الإدارية، وما كتبدّلش من بعد.</div>
 <button class="btn" onclick="saveSetup()">سجّل ✓</button></main>`};
 function pickChip(el,grp){document.querySelectorAll('#'+grp+' .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
 const chipVal=grp=>{const e=document.querySelector('#'+grp+' .chip.on');return e?e.textContent.trim():''};
 async function saveSetup(){const nom=$('#s_nom').value.trim(),annexe=$('#s_ann').value.trim(),souks=$('#s_souks').value.split('\n').map(s=>s.trim()).filter(Boolean);
  if(!nom||!souks.length)return toast('عمّر السمية والأسواق');
  PROFIL={nom,fonction:chipVal('s_fct')||'مقدم',annexe,souks,deviceId:(PROFIL&&PROFIL.deviceId)||uid()};await kvSet('profil',PROFIL);toast('تسجّل مزيان ✓');go('home')}
-VIEWS.settings=VIEWS.setup;
 
-VIEWS.home=async()=>{const recs=await allRecords();const unsent=recs.filter(r=>!r.sent).length;const t=recs.filter(r=>r.createdAt.slice(0,10)===today()).length;
+VIEWS.home=async()=>{const recs=await allRecords();const unsent=recs.length;
 const ico={
  prix:`<svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2" stroke-linejoin="round"><path d="M5 24 24 5h17v17L22 41z"/><circle cx="33" cy="14" r="3.2"/></svg>`,
  ab:`<svg viewBox="0 0 48 48" fill="none" stroke="#C1272D" stroke-width="3.2" stroke-linejoin="round"><path d="M24 5 44 41H4z"/><path d="M24 18v11M24 34v1.5"/></svg>`,
@@ -158,55 +157,30 @@ const ico={
  hi:`<svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2"><path d="M6 40h36M10 34l9-11 8 6 11-15"/></svg>`,
  se:`<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"><path d="M6 24 42 7 32 42l-8-14z"/><path d="M24 28 42 7"/></svg>`};
 return `${header('السلام، '+esc(PROFIL.fonction)+' '+esc(PROFIL.nom.split(' ')[0]),esc(PROFIL.annexe||'عين السوق')+' — '+new Date().toLocaleDateString('fr-MA'),false)}<main>
-<div class="card row"><span>${t} تسجيلات اليوم</span>${unsent?`<span class="badge b-amber">${unsent} ما تصيفطوش</span>`:`<span class="badge b-green">كلشي تصيفط</span>`}</div>
+<div class="card row"><span>الإشعارات</span>${unsent?`<span class="badge b-amber">${unsent} كيتسناو يتصيفطو</span>`:`<span class="badge b-green">كلشي تصيفط</span>`}</div>
 <div class="tiles">
  <button class="tile" onclick="go('prix')">${ico.prix}<b>الأثمنة</b><small>سجّل ثمن السلعة</small></button>
  <button class="tile" onclick="go('abattage')">${ico.ab}<b>الذبيحة السرية</b><small>صوّر وسجّل</small></button>
  <button class="tile" onclick="go('hygiene')">${ico.hy}<b>النظافة والسلعة</b><small>فايتة التاريخ ولا خامجة</small></button>
  <button class="tile" onclick="go('reclamation')">${ico.re}<b>شكاية</b><small>شكاية ديال مواطن</small></button>
- <button class="tile" onclick="go('historique')">${ico.hi}<b>تاريخ الأثمنة</b><small>شوف واش الثمن طلع</small></button>
- <button class="tile" onclick="go('registre')"><svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 15h16M16 23h16M16 31h10"/></svg><b>السجل ديالي</b><small>${recs.length} تسجيل</small></button>
  <button class="tile wide" style="background:var(--green);color:#fff;border:none" onclick="go('envoi')">${ico.se}<div style="text-align:right"><b style="color:#fff">صيفط للملحقة</b><br><small style="color:#E1F2E8">${unsent?unsent+' تسجيل كيتسناو':'ما كاين والو جديد'}</small></div></button>
-</div></main>`};
+</div><div class="mute center" style="margin-top:14px">العون كيبلّغ فقط. التحليل والقرار والمعاينة كيرجعو للسلطة المختصة.</div></main>`};
 
-function soukChips(id,cur){return `<div class="chips" id="${id}">${PROFIL.souks.map(s=>`<button class="chip ${s===cur?'on':''}" onclick="pickChip(this,'${id}');${id==='p_souk'?'refreshAlerts()':''}">${esc(s)}</button>`).join('')}</div>`}
+function soukChips(id,cur){return `<div class="chips" id="${id}">${PROFIL.souks.map(s=>`<button class="chip ${s===cur?'on':''}" onclick="pickChip(this,'${id}')">${esc(s)}</button>`).join('')}</div>`}
 
-/* --- Prix --- */
-let PRIX_HIST={};
-async function buildHist(){const recs=(await allRecords()).filter(r=>r.type==='prix');PRIX_HIST={};
- recs.sort((a,b)=>a.createdAt.localeCompare(b.createdAt)).forEach(r=>r.data.items.forEach(it=>{const k=r.souk+'|'+it.c;(PRIX_HIST[k]=PRIX_HIST[k]||[]).push({d:r.createdAt,p:it.p})}))}
-function moyenne(souk,c){const h=(PRIX_HIST[souk+'|'+c]||[]).slice(-4);if(!h.length)return null;return h.reduce((a,x)=>a+x.p,0)/h.length}
-VIEWS.prix=async()=>{await buildHist();const souk=STATE.souk||PROFIL.souks[0];
+/* --- Prix : saisie seule, aucune comparaison ni alerte sur le téléphone --- */
+VIEWS.prix=async()=>{const souk=STATE.souk||PROFIL.souks[0];
 return `${header('الأثمنة','الثمن اللي كيتباع بيه أكثر، بالدرهم')}<main>
 <label class="l">السوق</label>${soukChips('p_souk',souk)}
 <label class="l">السلعة (خلّي الخاوي إلا ما لقيتيش)</label>
-${PRODUITS.map(p=>`<div class="prod" id="pr_${p.c}"><div class="dot" style="background:${p.col}">${p.a[0]}</div><div class="n"><b>${p.a}</b><small>${p.f} — الدرهم / ${p.u}</small><div class="warn" id="w_${p.c}"></div></div><input inputmode="decimal" id="in_${p.c}" placeholder="—" oninput="checkPrix('${p.c}')"></div>`).join('')}
+${PRODUITS.map(p=>`<div class="prod"><div class="dot" style="background:${p.col}">${p.a[0]}</div><div class="n"><b>${p.a}</b><small>${p.f} — الدرهم / ${p.u}</small></div><input inputmode="decimal" id="in_${p.c}" placeholder="—"></div>`).join('')}
 <label class="l">ملاحظة (اختياري)</label><textarea id="p_note" placeholder="مثلا: السلعة قليلة اليوم"></textarea>
 </main><div class="bottom"><button class="btn" onclick="savePrix()">سجّل الأثمنة ✓</button></div>`};
-VIEWS.prix_after=()=>{};
-function checkPrix(c){const souk=chipVal('p_souk'),v=parseFloat(($('#in_'+c).value||'').replace(',','.'));const m=moyenne(souk,c);const row=$('#pr_'+c),w=$('#w_'+c);
- if(!isNaN(v)&&m&&v>m*(1+SEUIL)){row.classList.add('alert');w.textContent=`رد بالك! طالع ب +${Math.round((v/m-1)*100)}% على المعدل (${m.toFixed(1)} درهم)`}else{row.classList.remove('alert');w.textContent=m&&!isNaN(v)?'':''}}
-function refreshAlerts(){PRODUITS.forEach(p=>checkPrix(p.c))}
-async function savePrix(){const souk=chipVal('p_souk');const items=[];let alerts=[];
- for(const p of PRODUITS){const v=parseFloat(($('#in_'+p.c).value||'').replace(',','.'));if(!isNaN(v)&&v>0){const m=moyenne(souk,p.c);const al=m&&v>m*(1+SEUIL);items.push({c:p.c,p:v,moy:m?+m.toFixed(2):null,alerte:!!al});if(al)alerts.push(p.a)}}
+async function savePrix(){const souk=chipVal('p_souk');const items=[];
+ for(const p of PRODUITS){const v=parseFloat(($('#in_'+p.c).value||'').replace(',','.'));if(!isNaN(v)&&v>0)items.push({c:p.c,p:v})}
  if(!items.length)return toast('دخّل على الأقل ثمن واحد');
  await putRecord({id:uid(),type:'prix',souk,createdAt:new Date().toISOString(),auteur:PROFIL,data:{items,note:$('#p_note').value.trim()},photos:[],gps:null,sent:false});
- toast(alerts.length?'تسجّل — كاين '+alerts.length+' ثمن طالع':'تسجّل مزيان ✓');go('home')}
-
-/* --- Historique des prix --- */
-VIEWS.historique=async()=>{await buildHist();const souk=STATE.souk||PROFIL.souks[0],c=STATE.c||'tom';const p=PRODUITS.find(x=>x.c===c);const h=(PRIX_HIST[souk+'|'+c]||[]).slice(-10);
-let chart='<div class="mute center" style="padding:30px">ما كاين حتى ثمن مسجل لهاد السلعة فهاد السوق</div>';
-if(h.length){const W=340,H=180,L=34,R=10,T=14,B=26;const vals=h.map(x=>x.p),mn=Math.min(...vals)*.85,mx=Math.max(...vals)*1.1;const X=i=>L+(h.length===1?(W-L-R)/2:i*(W-L-R)/(h.length-1)),Y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn||1));
- let g='';for(let k=0;k<=3;k++){const v=mn+(mx-mn)*k/3;g+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#EEE6D6"/><text x="${L-4}" y="${Y(v)+4}" font-size="10" text-anchor="end" fill="#888">${v.toFixed(v<20?1:0)}</text>`}
- g+=`<polyline fill="none" stroke="#006233" stroke-width="3" points="${h.map((x,i)=>X(i)+','+Y(x.p)).join(' ')}"/>`;
- h.forEach((x,i)=>{const prev=h.slice(Math.max(0,i-4),i);const m=prev.length?prev.reduce((a,y)=>a+y.p,0)/prev.length:null;const al=m&&x.p>m*(1+SEUIL);g+=`<circle cx="${X(i)}" cy="${Y(x.p)}" r="${al?6:4}" fill="${al?'#C1272D':'#006233'}"/><text x="${X(i)}" y="${H-8}" font-size="9.5" text-anchor="middle" fill="#888">${x.d.slice(8,10)}/${x.d.slice(5,7)}</text>`});
- chart=`<div class="chart"><svg viewBox="0 0 ${W} ${H}" width="100%" style="direction:ltr">${g}</svg></div>`}
-const last=h[h.length-1],pv=h.slice(-5,-1),m=pv.length?pv.reduce((a,x)=>a+x.p,0)/pv.length:null;
-return `${header('تاريخ الأثمنة','واش الثمن طالع ولا نازل')}<main>
-<label class="l">السوق</label><div class="chips">${PROFIL.souks.map(s=>`<button class="chip ${s===souk?'on':''}" onclick="go('historique',{souk:'${esc(s)}',c:'${c}'})">${esc(s)}</button>`).join('')}</div>
-<label class="l">السلعة</label><select onchange="go('historique',{souk:'${esc(souk)}',c:this.value})">${PRODUITS.map(x=>`<option value="${x.c}" ${x.c===c?'selected':''}>${x.a} — ${x.f}</option>`).join('')}</select>
-<div class="card center" style="margin-top:14px"><div class="mute">آخر ثمن ديال ${p.a}</div><div class="big">${last?last.p+' <small style="font-size:18px">درهم</small>':'—'}</div><div class="mute">المعدل ديال 4 المرات اللي قبل: <b>${m?m.toFixed(2)+' درهم':'—'}</b></div></div>
-${chart}<div class="mute" style="margin-top:8px">● أحمر = ثمن طالع بأكثر من 15% على المعدل (مضاربة محتملة)</div></main>`};
+ toast('تسجّل ✓');go('home')}
 
 /* --- Photos (composant) --- */
 let PHOTOS=[];
@@ -219,7 +193,7 @@ async function doGPS(){$('#gps').textContent='كنقلب على البلاصة..
 
 /* --- Abattage clandestin --- */
 let NB=1;
-VIEWS.abattage=async()=>{PHOTOS=[];GPS=null;NB=1;return `${header('الذبيحة السرية','ورقة المعاينة — صوّر 3 تصاور على الأقل')}<main>
+VIEWS.abattage=async()=>{PHOTOS=[];GPS=null;NB=1;return `${header('الذبيحة السرية','إشعار — صوّر 3 تصاور على الأقل')}<main>
 <label class="l">السوق</label>${soukChips('a_souk',PROFIL.souks[0])}
 <label class="l">التصاور</label>${photosHTML()}
 <label class="l">النوع</label><div class="chips" id="a_esp">${['غنم','بگري','معز','دجاج','آخر'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'a_esp')">${e}</button>`).join('')}</div>
@@ -227,10 +201,10 @@ VIEWS.abattage=async()=>{PHOTOS=[];GPS=null;NB=1;return `${header('الذبيح�
 <label class="l">واش فيها الطابع ديال البيطري؟</label><div class="chips" id="a_tab"><button class="chip" onclick="pickChip(this,'a_tab')">آه، فيها</button><button class="chip on red" onclick="pickChip(this,'a_tab')">لا، ما فيهاش</button></div>
 <label class="l">البلاصة</label>${gpsHTML()}<input id="a_lieu" style="margin-top:8px" placeholder="وصف البلاصة: مثلا مور الرحبة ديال الغنم">
 <label class="l">ملاحظة</label><textarea id="a_note" placeholder="شنو شفتي؟ شكون كان كيبيع؟ (بلا أسماء إلا ما كانش ضروري)"></textarea>
-</main><div class="bottom"><button class="btn red" onclick="saveAbattage()">صيفط للقائد ✓</button></div>`};
+</main><div class="bottom"><button class="btn red" onclick="saveAbattage()">سجّل الإشعار ✓</button></div>`};
 async function saveAbattage(){if(!PHOTOS.length)return toast('خاص على الأقل تصويرة وحدة');
  await putRecord({id:uid(),type:'abattage',souk:chipVal('a_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{espece:chipVal('a_esp'),nombre:NB,estampille:chipVal('a_tab').startsWith('آه'),lieu:$('#a_lieu').value.trim(),note:$('#a_note').value.trim()},photos:PHOTOS.slice(),gps:GPS,sent:false});
- toast('تسجّلات المعاينة ✓');go('home')}
+ toast('تسجّل الإشعار ✓');go('home')}
 
 /* --- Hygiène / produits --- */
 VIEWS.hygiene=async()=>{PHOTOS=[];GPS=null;return `${header('النظافة والسلعة','سلعة فايتة التاريخ، خامجة، ولا بلا تبريد')}<main>
@@ -238,14 +212,13 @@ VIEWS.hygiene=async()=>{PHOTOS=[];GPS=null;return `${header('النظافة وا
 <label class="l">شنو المشكل؟</label><div class="chips" id="h_type">${['فايتة التاريخ','سلعة خامجة','بلا تبريد','البلاصة موسخة'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'h_type');expUI()">${e}</button>`).join('')}</div>
 <label class="l">صوّر السلعة والتيكيت ديال التاريخ</label>${photosHTML()}
 <label class="l">نوع السلعة</label><select id="h_prod">${['منتوجات الحليب','لحم ولا حوت','معلبات','مشروبات','حلويات','خضرة وفواكه','آخر'].map(x=>`<option>${x}</option>`).join('')}</select>
-<div id="expbox"><label class="l">التاريخ اللي مكتوب على التيكيت</label><input type="date" id="h_date" onchange="expUI()"><div id="h_res" style="margin-top:8px"></div></div>
+<div id="expbox"><label class="l">التاريخ اللي مكتوب على التيكيت</label><input type="date" id="h_date"></div>
 <label class="l">الكمية التقريبية</label><input id="h_qte" placeholder="مثلا: 30 علبة">
 <label class="l">ملاحظة</label><textarea id="h_note"></textarea>
 </main><div class="bottom"><button class="btn" onclick="saveHygiene()">سجّل ✓</button></div>`};
-function expInfo(d){if(!d)return null;const diff=Math.floor((new Date(d)-new Date(today()))/864e5);return diff<0?{t:`فايتة ب ${-diff} يوم`,c:'b-red',k:'perime',j:diff}:diff<=3?{t:`باقي ${diff} أيام فقط`,c:'b-amber',k:'proche',j:diff}:{t:'التاريخ مزيان',c:'b-green',k:'ok',j:diff}}
-function expUI(){const show=chipVal('h_type')==='فايتة التاريخ';$('#expbox').style.display=show?'':'none';const i=expInfo($('#h_date')&&$('#h_date').value);$('#h_res').innerHTML=i?`<div class="exp ${i.c}">${i.t}</div>`:''}
+function expUI(){$('#expbox').style.display=chipVal('h_type')==='فايتة التاريخ'?'':'none'}
 async function saveHygiene(){const type=chipVal('h_type');const d=$('#h_date').value;if(type==='فايتة التاريخ'&&!d)return toast('دخّل التاريخ اللي على التيكيت');if(!PHOTOS.length)return toast('صوّر السلعة عافاك');
- const i=expInfo(d);await putRecord({id:uid(),type:'hygiene',souk:chipVal('h_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{probleme:type,produit:$('#h_prod').value,datePeremption:type==='فايتة التاريخ'?d:null,etat:i?i.k:null,joursRestants:i?i.j:null,quantite:$('#h_qte').value.trim(),note:$('#h_note').value.trim()},photos:PHOTOS.slice(),gps:null,sent:false});
+ await putRecord({id:uid(),type:'hygiene',souk:chipVal('h_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{probleme:type,produit:$('#h_prod').value,datePeremption:type==='فايتة التاريخ'?d:null,quantite:$('#h_qte').value.trim(),note:$('#h_note').value.trim()},photos:PHOTOS.slice(),gps:null,sent:false});
  toast('تسجّل مزيان ✓');go('home')}
 
 /* --- Réclamation --- */
@@ -256,32 +229,19 @@ VIEWS.reclamation=async()=>{PHOTOS=[];return `${header('شكاية','شكاية 
 <label class="l">تصويرة (اختياري)</label>${photosHTML()}
 <label class="l">رقم التلفون ديال المشتكي (اختياري)</label><input id="r_tel" inputmode="tel" style="direction:ltr;text-align:right" placeholder="06...">
 </main><div class="bottom"><button class="btn" onclick="saveRecl()">سجّل الشكاية ✓</button></div>`};
-async function saveRecl(){const desc=$('#r_desc').value.trim();if(!desc)return toast('كتب شنو هي الشكاية');const recs=await allRecords();const n=recs.filter(r=>r.type==='reclamation').length+1;
+async function saveRecl(){const desc=$('#r_desc').value.trim();if(!desc)return toast('كتب شنو هي الشكاية');const n=((await kvGet('nrecl'))||0)+1;await kvSet('nrecl',n);
  await putRecord({id:uid(),type:'reclamation',souk:chipVal('r_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{numero:(PROFIL.deviceId||'').slice(-3).toUpperCase()+'-'+String(n).padStart(4,'0'),objet:chipVal('r_type'),description:desc,telephone:$('#r_tel').value.trim()},photos:PHOTOS.slice(),gps:null,sent:false});
  toast('تسجّلات الشكاية ✓');go('home')}
 
-/* --- Registre --- */
-function resume(r){const d=r.data;switch(r.type){case 'prix':return d.items.length+' سلعة'+(d.items.some(i=>i.alerte)?' — <span class="badge b-red">ثمن طالع</span>':'');case 'abattage':return d.nombre+' '+d.espece+(d.estampille?'':' — بلا طابع');case 'hygiene':return d.probleme+' — '+d.produit;case 'reclamation':return 'رقم '+d.numero+' — '+d.objet}}
-VIEWS.registre=async()=>{const recs=await allRecords();return `${header('السجل ديالي','كلشي اللي سجلتي')}<main>
-${recs.length?recs.map(r=>`<div class="item" onclick="go('detail',{id:'${r.id}'})"><div class="row"><b>${TYPES[r.type]}</b>${r.sent?'<span class="badge b-green">تصيفط</span>':'<span class="badge b-amber">ما تصيفطش</span>'}</div><div class="mute">${esc(r.souk)} — ${fmtDate(r.createdAt)}</div><div style="font-size:14.5px;margin-top:3px">${resume(r)}</div></div>`).join(''):'<div class="card center mute">ما كاين حتى تسجيل</div>'}</main>`};
-VIEWS.detail=async()=>{const r=(await allRecords()).find(x=>x.id===STATE.id);if(!r)return go('registre');PHOTOS=r.photos||[];
-const d=r.data;let body='';
-if(r.type==='prix')body=d.items.map(i=>{const p=PRODUITS.find(x=>x.c===i.c);return `<div class="row" style="padding:7px 0;border-bottom:1px solid #eee"><span>${p.a}</span><b style="${i.alerte?'color:var(--red)':''}">${i.p} درهم${i.alerte?' ▲':''}</b></div>`}).join('');
-else body=Object.entries({abattage:{'النوع':d.espece,'العدد':d.nombre,'الطابع':d.estampille?'كاين':'ما كاينش','البلاصة':d.lieu},hygiene:{'المشكل':d.probleme,'السلعة':d.produit,'تاريخ الصلاحية':d.datePeremption,'الكمية':d.quantite},reclamation:{'الرقم':d.numero,'الموضوع':d.objet,'الشرح':d.description,'التلفون':d.telephone}}[r.type]).filter(([k,v])=>v!==null&&v!=='').map(([k,v])=>`<div style="padding:7px 0;border-bottom:1px solid #eee"><span class="mute">${k}</span><div>${esc(v)}</div></div>`).join('');
-return `${header(TYPES[r.type],esc(r.souk)+' — '+fmtDate(r.createdAt))}<main><div class="card">${body}${d.note?`<div style="padding-top:8px"><span class="mute">ملاحظة</span><div>${esc(d.note)}</div></div>`:''}</div>
-${PHOTOS.length?`<div class="photos">${PHOTOS.map((p,i)=>`<div class="ph"><img src="${p}" onclick="zoom(${i})"></div>`).join('')}</div>`:''}
-${r.gps?`<div class="card mute" style="margin-top:12px">📍 ${r.gps.lat}, ${r.gps.lng} (±${r.gps.acc} م)</div>`:''}
-${!r.sent?`<button class="btn light" style="border-color:var(--red);color:var(--red)" onclick="if(confirm('واش متأكد بغيتي تمسح هاد التسجيل؟'))delRecord('${r.id}').then(()=>go('registre'))">مسح هاد التسجيل</button>`:''}</main>`};
-
 /* --- Envoi vers l'annexe (fichier) --- */
-VIEWS.envoi=async()=>{const recs=await allRecords();const un=recs.filter(r=>!r.sent);const cnt=t=>un.filter(r=>r.type===t).length;
+VIEWS.envoi=async()=>{const un=await allRecords();const cnt=t=>un.filter(r=>r.type===t).length;
 return `${header('صيفط للملحقة','بلا أنترنيت: كنصاوبو ملف وكنعطيوه للملحقة')}<main>
 <div class="card center"><div class="big" style="color:var(--green)">${un.length}</div><div>تسجيل كيتسناو يتصيفطو</div>
 <div class="mute" style="margin-top:6px">أثمنة: ${cnt('prix')} — ذبيحة: ${cnt('abattage')} — نظافة: ${cnt('hygiene')} — شكايات: ${cnt('reclamation')}</div></div>
 <div class="card"><b>كيفاش؟</b><div class="mute" style="font-size:15px;line-height:1.9;margin-top:6px">1. ضغط على «صاوب الملف».<br>2. الملف كيتحط فالتلفون (Download).<br>3. فالملحقة: ربط التلفون بالكابل مع البيسي، ولا صيفطو بالبلوتوث.<br>4. البيسي كيقرا الملف بوحدو.</div></div>
-<button class="btn" onclick="exporter(false)" ${un.length?'':'disabled style="opacity:.5"'}>صاوب الملف (${un.length}) ✓</button>
-<button class="btn light" onclick="exporter(true)">عاود صاوب ملف فيه كلشي (${recs.length})</button></main>`};
-async function exporter(all){const recs=await allRecords();const list=all?recs:recs.filter(r=>!r.sent);if(!list.length)return toast('ما كاين والو');
+<button class="btn" onclick="exporter()" ${un.length?'':'disabled style="opacity:.5"'}>صاوب الملف (${un.length}) ✓</button>
+<div class="mute center" style="margin-top:10px">من بعد الإرسال، كيتمسحو الإشعارات من التلفون.</div></main>`};
+async function exporter(){const list=await allRecords();if(!list.length)return toast('ما كاين والو');
  const payload={app:'ain-souk',version:1,exportedAt:new Date().toISOString(),auteur:PROFIL,records:list.map(r=>({...r,sent:undefined}))};
  const stamp=new Date().toISOString().slice(0,16).replace(/[-:T]/g,'');const name=`ainsouk_${(PROFIL.nom||'aux').replace(/\s+/g,'_')}_${stamp}.json`;const txt=JSON.stringify(payload);
  let ok=false;
@@ -289,7 +249,7 @@ async function exporter(all){const recs=await allRecords();const list=all?recs:r
  else{const f=new File([txt],name,{type:'application/json'});
   if(navigator.canShare&&navigator.canShare({files:[f]})&&confirm('بغيتي تبارطاجي الملف (بلوتوث...)؟ — «Annuler» = تحميل عادي')){try{await navigator.share({files:[f],title:name});ok=true}catch(e){}}
   if(!ok){const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=name;document.body.appendChild(a);a.click();a.remove();ok=true}}
- if(ok){for(const r of list){r.sent=true;await putRecord(r)}toast('الملف واجد: '+list.length+' تسجيل ✓');go('home')}}
+ if(ok){for(const r of list)await delRecord(r.id);toast('الملف واجد: '+list.length+' تسجيل ✓');go('home')}}
 
 /* ---------- Démarrage ---------- */
 (async()=>{await openDB();PROFIL=await kvGet('profil');go(PROFIL?'home':'setup')})();

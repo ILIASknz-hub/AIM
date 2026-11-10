@@ -11,8 +11,8 @@ android {
         applicationId = "ma.irat.ainsouk"
         minSdk = 24          // Android 7.0 et plus
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0-prototype"
+        versionCode = 2
+        versionName = "1.1-prototype"
     }
 
     buildTypes {
