@@ -40,6 +40,10 @@ Le script régénère `app/src/main/assets/www/config.js` (téléphones) et `pos
 
 Les souks sont **préétablis** : l'auxiliaire choisit uniquement parmi les souks actifs qui lui sont affectés ; il ne saisit jamais de nom. La gestion se fait dans le poste, menu **Souks hebdomadaires** : calendrier de la semaine, ajout, modification (noms, jour de tenue, coordonnées GPS, observations), suspension, souks sans auxiliaire, souks sans fiche récente.
 
+## Excel et impression (poste de l'annexe)
+
+Chaque liste (prix, signalements, réclamations, souks) a deux boutons : **⬇ Excel** (classeur .xlsx natif : en-têtes figés, filtres automatiques, hausses de prix et urgences surlignées, mise en page A4 paysage) et **🖨 Imprimer** (en-tête officiel, A4 paysage, zone de signature). Le bouton **Excel complet** du tableau de bord produit un classeur de six feuilles : synthèse et priorités, prix, abattages, hygiène, réclamations, souks. Les exports respectent la période et le souk choisis.
+
 ## Transmettre sans Internet
 
 | Voie | Téléphone | Poste |
