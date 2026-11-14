@@ -20,5 +20,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="v1.0.${{ github.run_number }}"
-          gh release create "$TAG" AinSouk.apk --title "Aïn Souk — prototype $TAG" --notes "Fichier d'installation Android. Sur le téléphone : télécharger AinSouk.apk, l'ouvrir, autoriser l'installation, puis Installer." --latest
+          TAG="v2.0.${{ github.run_number }}"
+          gh release create "$TAG" AinSouk.apk --title "Aïn Souk v2 — $TAG" --notes "Fichier d'installation Android. Sur le téléphone : télécharger AinSouk.apk, l'ouvrir, autoriser l'installation, puis Installer." --latest

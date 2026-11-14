@@ -3,255 +3,350 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#C1272D">
-<title>عين السوق — العون</title>
+<meta name="theme-color" content="#14284B">
+<title>عين السوق — تطبيق أعوان السلطة</title>
 <style>
-:root{--red:#C1272D;--red-d:#9E1F25;--green:#006233;--green-d:#004B27;--sand:#F7F3EA;--ink:#1E1E1E;--mute:#6E6A62;--line:#E4DCCB;--amber:#B26A00;--ok:#1E7A46}
+@font-face{font-family:"Naskh";src:url(fonts/NotoNaskhArabic.woff) format("woff");font-weight:400 700;font-display:block}
+@font-face{font-family:"Kufi";src:url(fonts/NotoKufiArabic.woff) format("woff");font-weight:400 800;font-display:block}
+:root{--navy:#14284B;--navy-2:#1F3A68;--red:#B0222B;--green:#0B6B45;--green-l:#E6F2EC;--sand:#F5F3EE;--ink:#1C2430;--mute:#5E6672;--line:#DEDAD0;--amber:#9A6200;--amber-l:#FFF3DA;--red-l:#FBE7E7}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
-body{font-family:"Noto Sans Arabic","Segoe UI",Tahoma,"DejaVu Sans",sans-serif;background:var(--sand);color:var(--ink);font-size:17px;max-width:520px;margin:0 auto;position:relative}
-header{background:var(--red);color:#fff;padding:14px 16px 16px;position:sticky;top:0;z-index:5;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-header .top{display:flex;align-items:center;gap:10px}
-header .logo{width:38px;height:38px;flex:none}
-header h1{font-size:21px;line-height:1.2}
-header .sub{font-size:13px;opacity:.9;margin-top:2px}
-header .icon{margin-inline-start:auto;background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:12px;width:44px;height:44px;font-size:20px}
-header .back{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:12px;height:40px;padding:0 14px;font-size:16px;font-family:inherit}
-.stripe{height:5px;background:var(--green)}
-main{padding:14px 14px 110px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+body{font-family:"Naskh","Noto Naskh Arabic","Traditional Arabic",serif;background:var(--sand);color:var(--ink);font-size:18px;line-height:1.65;max-width:520px;margin:0 auto;position:relative;-webkit-font-smoothing:antialiased;font-feature-settings:"kern","liga","calt"}
+h1,h2,b,.k,button,.chip,label.l,.badge{font-family:"Kufi","Noto Kufi Arabic",sans-serif}
+header{background:var(--navy);color:#fff;padding:14px 16px 14px;position:sticky;top:0;z-index:5}
+header .top{display:flex;align-items:center;gap:12px}
+header .logo{width:40px;height:40px;flex:none}
+header h1{font-size:19px;font-weight:700;line-height:1.35}
+header .sub{font-size:13.5px;opacity:.85;margin-top:1px;font-family:"Naskh",serif}
+header .act{margin-inline-start:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;height:38px;padding:0 12px;font-size:13px;font-weight:600}
+header .back{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;height:38px;padding:0 12px;font-size:14px;font-weight:600}
+.stripe{height:4px;background:linear-gradient(90deg,var(--green) 0 50%,var(--red) 50% 100%)}
+main{padding:16px 14px 120px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tile{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 10px;text-align:center;min-height:138px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:inherit;color:inherit;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 10px 14px;text-align:center;min-height:146px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:inherit;cursor:pointer;box-shadow:0 1px 2px rgba(20,40,75,.06)}
 .tile:active{transform:scale(.97)}
-.tile svg{width:46px;height:46px}
-.tile b{font-size:18px}
-.tile small{font-size:12.5px;color:var(--mute)}
-.tile.wide{grid-column:span 2;min-height:84px;flex-direction:row;gap:14px}
-.badge{display:inline-block;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:20px}
-.b-red{background:#FBE3E1;color:var(--red-d)}.b-green{background:#E1F2E8;color:var(--green)}.b-amber{background:#FFF1D2;color:var(--amber)}.b-grey{background:#EEE;color:#555}
-label.l{display:block;font-size:14.5px;font-weight:700;margin:14px 2px 6px}
-input,select,textarea{width:100%;font:inherit;font-size:17px;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green)}
-textarea{min-height:90px;resize:vertical}
+.tile svg{width:44px;height:44px}
+.tile b{font-size:17px;font-weight:700}
+.tile small{font-size:13.5px;color:var(--mute);font-family:"Naskh",serif;line-height:1.5}
+.tile.wide{grid-column:span 2;min-height:86px;flex-direction:row;gap:14px;background:var(--navy);color:#fff;border:none}
+.tile.wide small{color:#C9D3E6}
+.badge{display:inline-block;font-size:13px;font-weight:700;padding:3px 12px;border-radius:20px}
+.b-green{background:var(--green-l);color:var(--green)}.b-amber{background:var(--amber-l);color:var(--amber)}.b-red{background:var(--red-l);color:var(--red)}
+label.l{display:block;font-size:14.5px;font-weight:700;margin:16px 2px 7px;color:var(--navy)}
+input,select,textarea{width:100%;font:inherit;font-size:18px;padding:11px 13px;border:1.5px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy-2)}
+input[dir=ltr]{text-align:left;font-family:system-ui,sans-serif}
+textarea{min-height:92px;resize:vertical}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1.5px solid var(--line);background:#fff;border-radius:22px;padding:9px 15px;font:inherit;font-size:15.5px;cursor:pointer}
-.chip.on{border-color:var(--green);background:var(--green);color:#fff;font-weight:700}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:22px;padding:7px 15px;font-size:14.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+.chip.on{border-color:var(--navy);background:var(--navy);color:#fff}
 .chip.on.red{border-color:var(--red);background:var(--red)}
-.btn{display:block;width:100%;border:none;border-radius:16px;padding:16px;font:inherit;font-size:19px;font-weight:700;color:#fff;background:var(--green);cursor:pointer;margin-top:14px}
-.btn.red{background:var(--red)}.btn.light{background:#fff;color:var(--green);border:2px solid var(--green)}
+.btn{display:block;width:100%;border:none;border-radius:13px;padding:14px;font-size:17px;font-weight:700;color:#fff;background:var(--navy);cursor:pointer;margin-top:14px}
+.btn.red{background:var(--red)}.btn.green{background:var(--green)}.btn.light{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn:disabled{opacity:.45}
 .btn:active{opacity:.85}
-.bottom{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--sand) 30%)}
+.bottom{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;padding:10px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--sand) 28%)}
 .bottom .btn{margin:0}
-.prod{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:8px}
-.prod .dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex:none;font-size:15px}
+.prod{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:9px 12px;margin-bottom:8px}
+.prod .dot{width:10px;height:38px;border-radius:5px;flex:none}
 .prod .n{flex:1;min-width:0}
-.prod .n b{display:block;font-size:16.5px}
-.prod .n small{color:var(--mute);font-size:12.5px}
-.prod input{width:96px;text-align:center;font-weight:700;font-size:19px;padding:9px 6px;direction:ltr}
-.prod.alert{border-color:#F0B4AF;background:#FFF7F6}
-.prod.alert input{border-color:var(--red);color:var(--red-d)}
-.warn{font-size:13px;color:var(--red-d);margin-top:3px;font-weight:700}
+.prod .n b{display:block;font-size:16.5px;font-weight:600}
+.prod .n small{color:var(--mute);font-size:13.5px}
+.prod input{width:100px;text-align:center;font-weight:700;font-size:19px;padding:8px 6px;direction:ltr;font-family:system-ui,sans-serif}
 .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.ph{aspect-ratio:1;border-radius:12px;overflow:hidden;position:relative;background:#ddd}
+.ph{aspect-ratio:1;border-radius:11px;overflow:hidden;position:relative;background:#ddd}
 .ph img{width:100%;height:100%;object-fit:cover}
 .ph button{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(0,0,0,.6);color:#fff;font-size:16px}
-.ph.add{background:#fff;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mute);font-size:13px;cursor:pointer;gap:4px}
-.ph.add span{font-size:34px;line-height:1;color:var(--green)}
-.stepper{display:flex;align-items:center;gap:14px;justify-content:center}
-.stepper button{width:52px;height:52px;border-radius:50%;border:2px solid var(--green);background:#fff;color:var(--green);font-size:28px;font-weight:700}
-.stepper b{font-size:30px;min-width:50px;text-align:center}
+.ph.add{background:#fff;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mute);font-size:14px;cursor:pointer;gap:2px}
+.ph.add span{font-size:32px;line-height:1;color:var(--navy)}
+.stepper{display:flex;align-items:center;gap:16px;justify-content:center}
+.stepper button{width:50px;height:50px;border-radius:50%;border:2px solid var(--navy);background:#fff;color:var(--navy);font-size:26px;font-weight:700}
+.stepper b{font-size:30px;min-width:50px;text-align:center;font-family:system-ui,sans-serif}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.mute{color:var(--mute);font-size:13.5px}
-.item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;cursor:pointer}
-.item b{font-size:16px}
-.gps{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px dashed var(--line);border-radius:12px;padding:11px;font-size:14.5px;cursor:pointer}
-.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--green-d);color:#fff;padding:12px 20px;border-radius:24px;font-size:16px;font-weight:700;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:opacity .3s}
-.exp{border-radius:12px;padding:12px;font-weight:700;text-align:center;font-size:16px}
-.chart{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px}
-.big{font-size:42px;font-weight:800;color:var(--red)}
+.mute{color:var(--mute);font-size:14.5px}
+.gps{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px dashed var(--line);border-radius:11px;padding:11px;font-size:15px;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:112px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:11px 22px;border-radius:24px;font-size:16px;font-family:"Kufi",sans-serif;font-weight:600;z-index:50;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:opacity .3s;white-space:nowrap}
 .center{text-align:center}
+.big{font-size:44px;font-weight:800;color:var(--navy);font-family:system-ui,sans-serif;line-height:1.1}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:60;display:flex;align-items:center;justify-content:center}
 .modal img{max-width:100%;max-height:100%}
 .hidden{display:none}
+.login{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:24px 20px;background:linear-gradient(180deg,var(--navy) 0 310px,var(--sand) 310px)}
+.login .head{color:#fff;text-align:center;margin-bottom:18px}
+.login .head .logo{width:74px;height:74px;margin:0 auto 8px}
+.login .head h1{font-size:24px}
+.login .head p{opacity:.85;font-size:15px}
+.err{background:var(--red-l);color:var(--red);border-radius:10px;padding:9px 12px;font-size:15px;margin-top:12px}
+.meth{display:flex;align-items:center;gap:14px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;width:100%;text-align:right;color:inherit}
+.meth svg{width:36px;height:36px;flex:none}
+.meth b{display:block;font-size:16px}
+.meth small{display:block;color:var(--mute);font-size:13.5px;font-family:"Naskh",serif;font-weight:400}
+.meth:active{background:#F0F3F8}
+.qrbox{background:#fff;border-radius:14px;padding:14px;text-align:center;border:1px solid var(--line)}
+.qrbox img{width:100%;max-width:330px;image-rendering:pixelated}
+.prog{height:8px;background:#E7EAF0;border-radius:6px;overflow:hidden;margin-top:10px}.prog i{display:block;height:100%;background:var(--green)}
+.lock{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--green);font-family:"Kufi",sans-serif;font-weight:600}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <input id="cam" type="file" accept="image/*" capture="environment" class="hidden">
+<input id="fcfg" type="file" class="hidden">
+<script src="config.js"></script>
+<script src="lib/qrcode.js"></script>
 <script>
-/* =========================================================
-   عين السوق — تطبيق العون (Auxiliaire d'autorité)
-   Fonctionne 100 % hors ligne. Données stockées dans IndexedDB.
-   ========================================================= */
-const LOGO=`<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="112" fill="#fff"/><path d="M120 150 L256 92 L392 150 Z" fill="#C1272D"/><path d="M96,150 L416,150 L416,196 Q384,236 352,196 Q320,236 288,196 Q256,236 224,196 Q192,236 160,196 Q128,236 96,196 Z" fill="#006233"/><path d="M86 318 Q256 176 426 318 Q256 460 86 318 Z" fill="#C1272D"/><circle cx="256" cy="318" r="74" fill="#fff" stroke="#006233" stroke-width="12"/><polyline points="256,272 283,355 213,304 299,304 229,355 256,272" fill="none" stroke="#006233" stroke-width="11" stroke-linejoin="round"/></svg>`;
+/* =====================================================================
+   عين السوق — تطبيق أعوان السلطة (version 2)
+   - connexion par identifiant et mot de passe (comptes créés à l'annexe)
+   - l'auxiliaire alimente les données ; il ne les consulte pas
+   - souks prédéfinis : il choisit seulement dans sa liste
+   - transmission sans Internet : Bluetooth, partage à proximité, code QR, câble USB
+   - fichiers chiffrés : seul le poste de l'annexe peut les ouvrir
+   ===================================================================== */
+const LOGO=`<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="112" fill="#fff"/><path d="M120 150 L256 92 L392 150 Z" fill="#B0222B"/><path d="M96,150 L416,150 L416,196 Q384,236 352,196 Q320,236 288,196 Q256,236 224,196 Q192,236 160,196 Q128,236 96,196 Z" fill="#0B6B45"/><path d="M86 318 Q256 176 426 318 Q256 460 86 318 Z" fill="#B0222B"/><circle cx="256" cy="318" r="74" fill="#fff" stroke="#0B6B45" stroke-width="12"/><polyline points="256,272 283,355 213,304 299,304 229,355 256,272" fill="none" stroke="#0B6B45" stroke-width="11" stroke-linejoin="round"/></svg>`;
 
 const PRODUITS=[
- {c:'tom',a:'طماطم',f:'Tomate',u:'كيلو',col:'#C0392B'},
- {c:'pdt',a:'بطاطا',f:'Pomme de terre',u:'كيلو',col:'#A1887F'},
- {c:'oig',a:'بصل',f:'Oignon',u:'كيلو',col:'#8E5BA6'},
- {c:'car',a:'خيزو',f:'Carotte',u:'كيلو',col:'#E67E22'},
- {c:'vov',a:'لحم الغنمي',f:'Viande ovine',u:'كيلو',col:'#7B241C'},
- {c:'vbo',a:'لحم البگري',f:'Viande bovine',u:'كيلو',col:'#922B21'},
- {c:'pou',a:'دجاج حي',f:'Poulet vivant',u:'كيلو',col:'#B9770E'},
- {c:'oeu',a:'بيض',f:'Œufs',u:'حبة',col:'#D4AC0D'},
- {c:'hui',a:'زيت',f:'Huile',u:'لتر',col:'#B7950B'},
- {c:'far',a:'الفارينة',f:'Farine',u:'كيلو',col:'#AAB7B8'},
- {c:'mou',a:'حولي',f:'Mouton (tête)',u:'راس',col:'#5D6D7E'},
+ {c:'tom',a:'الطماطم',f:'Tomate',u:'للكيلوغرام',col:'#C0392B'},
+ {c:'pdt',a:'البطاطس',f:'Pomme de terre',u:'للكيلوغرام',col:'#A1887F'},
+ {c:'oig',a:'البصل',f:'Oignon',u:'للكيلوغرام',col:'#8E5BA6'},
+ {c:'car',a:'الجزر',f:'Carotte',u:'للكيلوغرام',col:'#E67E22'},
+ {c:'vov',a:'لحم الغنم',f:'Viande ovine',u:'للكيلوغرام',col:'#7B241C'},
+ {c:'vbo',a:'لحم البقر',f:'Viande bovine',u:'للكيلوغرام',col:'#922B21'},
+ {c:'pou',a:'الدجاج الحي',f:'Poulet vivant',u:'للكيلوغرام',col:'#B9770E'},
+ {c:'oeu',a:'البيض',f:'Œufs',u:'للوحدة',col:'#D4AC0D'},
+ {c:'hui',a:'زيت المائدة',f:'Huile',u:'للتر',col:'#B7950B'},
+ {c:'far',a:'الدقيق',f:'Farine',u:'للكيلوغرام',col:'#AAB7B8'},
+ {c:'mou',a:'رأس الغنم',f:'Mouton (tête)',u:'للرأس',col:'#5D6D7E'},
 ];
-const TYPES={prix:'الأثمنة',abattage:'الذبيحة السرية',hygiene:'النظافة والسلعة',reclamation:'شكاية'};
+const JOURS={lun:'الإثنين',mar:'الثلاثاء',mer:'الأربعاء',jeu:'الخميس',ven:'الجمعة',sam:'السبت',dim:'الأحد'};
 
-/* ---------- Base de données locale (IndexedDB) ---------- */
+/* ---------- Base locale (IndexedDB) ---------- */
 let DB;
-function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('ainsouk_mobile',1);
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('ainsouk_mobile_v2',1);
  r.onupgradeneeded=()=>{const d=r.result;d.createObjectStore('records',{keyPath:'id'});d.createObjectStore('kv')};
  r.onsuccess=()=>{DB=r.result;res()};r.onerror=()=>rej(r.error)})}
 const tx=(s,m='readonly')=>DB.transaction(s,m).objectStore(s);
 const req=r=>new Promise((res,rej)=>{r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
 const kvGet=k=>req(tx('kv').get(k));
 const kvSet=(k,v)=>req(tx('kv','readwrite').put(v,k));
-const allRecords=()=>req(tx('records').getAll()).then(a=>a.sort((x,y)=>y.createdAt.localeCompare(x.createdAt)));
+const kvDel=k=>req(tx('kv','readwrite').delete(k));
+const allRecords=()=>req(tx('records').getAll());
 const putRecord=r=>req(tx('records','readwrite').put(r));
 const delRecord=id=>req(tx('records','readwrite').delete(id));
 
 /* ---------- Utilitaires ---------- */
 const $=s=>document.querySelector(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
-const today=()=>new Date().toISOString().slice(0,10);
-const fmtDate=iso=>{const d=new Date(iso);return d.toLocaleDateString('fr-MA')+' '+d.toTimeString().slice(0,5)};
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>{e.style.opacity=0;setTimeout(()=>e.remove(),300)},1800)}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dateAr=()=>new Date().toLocaleDateString('ar-MA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>{e.style.opacity=0;setTimeout(()=>e.remove(),300)},2000)}
 function compress(file){return new Promise(res=>{const fr=new FileReader();fr.onload=()=>{const img=new Image();img.onload=()=>{const M=1280,s=Math.min(1,M/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.72))};img.src=fr.result};fr.readAsDataURL(file)})}
 function takePhoto(){return new Promise(res=>{const i=$('#cam');i.value='';i.onchange=async()=>{if(!i.files[0])return res(null);res(await compress(i.files[0]))};i.click()})}
 function getGPS(){return new Promise(res=>{if(!navigator.geolocation)return res(null);navigator.geolocation.getCurrentPosition(p=>res({lat:+p.coords.latitude.toFixed(6),lng:+p.coords.longitude.toFixed(6),acc:Math.round(p.coords.accuracy)}),()=>res(null),{enableHighAccuracy:true,timeout:15000})})}
 
-/* ---------- État ---------- */
-let PROFIL=null, STATE={}, VIEW='home';
-function header(title,sub,back=true){return `<header><div class="top">${back?`<button class="back" onclick="go('home')">→ رجع</button>`:`<div class="logo">${LOGO}</div>`}<div><h1>${title}</h1>${sub?`<div class="sub">${sub}</div>`:''}</div></div></header><div class="stripe"></div>`}
-async function go(v,opts={}){VIEW=v;STATE=opts;window.scrollTo(0,0);await render()}
-async function render(){const app=$('#app');app.innerHTML=await VIEWS[VIEW]();if(VIEWS[VIEW+'_after'])VIEWS[VIEW+'_after']()}
+/* ---------- Cryptographie (Web Crypto) ---------- */
+const enc=new TextEncoder(),dec=new TextDecoder();
+function b64(u8){let s='';for(let i=0;i<u8.length;i+=0x8000)s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));return btoa(s)}
+function unb64(s){const b=atob(s),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+async function empreinte(mdp,sel,iter){const k=await crypto.subtle.importKey('raw',enc.encode(mdp),'PBKDF2',false,['deriveBits']);
+ return b64(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:unb64(sel),iterations:iter||100000},k,256)))}
+async function gz(u8){if(!window.CompressionStream)return [u8,false];const s=new Blob([u8]).stream().pipeThrough(new CompressionStream('gzip'));return [new Uint8Array(await new Response(s).arrayBuffer()),true]}
+/* Chiffrement hybride : une clé AES-256 aléatoire chiffre les données ; elle-même est chiffrée avec la clé PUBLIQUE de l'annexe (RSA-OAEP).
+   Le téléphone ne possède pas la clé privée : il ne peut pas relire ce qu'il a envoyé. */
+async function chiffrer(obj){const [data,z]=await gz(enc.encode(JSON.stringify(obj)));
+ const pub=await crypto.subtle.importKey('jwk',CFG.cleChiffrement,{name:'RSA-OAEP',hash:'SHA-256'},false,['encrypt']);
+ const aes=await crypto.subtle.generateKey({name:'AES-GCM',length:256},true,['encrypt']);const iv=crypto.getRandomValues(new Uint8Array(12));
+ const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},aes,data));
+ const ek=new Uint8Array(await crypto.subtle.encrypt({name:'RSA-OAEP'},pub,await crypto.subtle.exportKey('raw',aes)));
+ return {app:'ain-souk',version:2,format:'chiffre',kid:CFG.kid,z,ek:b64(ek),iv:b64(iv),ct:b64(ct)}}
+async function verifierSignature(pkg){try{const pub=await crypto.subtle.importKey('jwk',CFG.cleSignature,{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
+ return await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},pub,unb64(pkg.signature),enc.encode(pkg.contenu))}catch(e){return false}}
 
-/* ---------- Écrans ---------- */
+/* ---------- Configuration (comptes, souks, clés publiques) ---------- */
+let CFG=window.AINSOUK_CONFIG, USER=null, VIEW='login', STATE={};
+async function chargerConfig(){const c=await kvGet('config');if(c&&c.version>CFG.version&&c.kid===CFG.kid)CFG=c}
+const soukById=id=>CFG.souks.find(s=>s.id===id);
+const mesSouks=()=>(USER.souks||[]).map(soukById).filter(s=>s&&s.actif!==false);
+
+/* ---------- Session ---------- */
+const DUREE_SESSION=12*3600e3;
+async function ouvrirSession(){const s=await kvGet('session');if(!s||Date.now()-s.at>DUREE_SESSION)return null;
+ const u=CFG.comptes.find(c=>c.id===s.id&&c.actif!==false);return u||null}
+
+/* ---------- Navigation ---------- */
+function header(title,sub,back=true){return `<header><div class="top">${back?`<button class="back" onclick="go('home')">رجوع</button>`:`<div class="logo">${LOGO}</div>`}<div><h1>${title}</h1>${sub?`<div class="sub">${sub}</div>`:''}</div>${!back?`<button class="act" onclick="deconnexion()">خروج</button>`:''}</div></header><div class="stripe"></div>`}
+async function go(v,opts={}){if(v!=='login'&&!USER)v='login';VIEW=v;STATE=opts;window.scrollTo(0,0);await render()}
+async function render(){$('#app').innerHTML=await VIEWS[VIEW]();if(VIEWS[VIEW+'_after'])VIEWS[VIEW+'_after']()}
 const VIEWS={};
-
-VIEWS.setup=async()=>{const p=PROFIL||{nom:'',fonction:'مقدم',annexe:'',souks:['سوق سيدي قاسم','سوق مشرع بلقصيري','سوق حد كورت','سوق جرف الملحة']};STATE.p=p;
-return `${header('مرحبا بيك','عمّر هاد المعلومات مرة وحدة',false)}<main>
-<div class="card center"><div style="width:84px;margin:4px auto 8px">${LOGO}</div><b style="font-size:20px">عين السوق</b><div class="mute">التطبيق ديال أعوان السلطة فالسوق الأسبوعي</div></div>
-<label class="l">السمية الكاملة</label><input id="s_nom" value="${esc(p.nom)}" placeholder="مثلا: أحمد العلوي">
-<label class="l">الصفة</label><div class="chips" id="s_fct">${['مقدم','شيخ','خليفة','قائد'].map(f=>`<button class="chip ${p.fonction===f?'on':''}" onclick="pickChip(this,'s_fct')">${f}</button>`).join('')}</div>
-<label class="l">الملحقة الإدارية / القيادة</label><input id="s_ann" value="${esc(p.annexe)}" placeholder="مثلا: قيادة ...">
-<label class="l">الأسواق اللي كتخدم فيهم (كل سوق فسطر)</label><textarea id="s_souks">${esc(p.souks.join('\n'))}</textarea>
-<div class="mute" style="margin-top:10px">هاد المعلومات كتعمّر مرة وحدة مع الملحقة الإدارية، وما كتبدّلش من بعد.</div>
-<button class="btn" onclick="saveSetup()">سجّل ✓</button></main>`};
 function pickChip(el,grp){document.querySelectorAll('#'+grp+' .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
-const chipVal=grp=>{const e=document.querySelector('#'+grp+' .chip.on');return e?e.textContent.trim():''};
-async function saveSetup(){const nom=$('#s_nom').value.trim(),annexe=$('#s_ann').value.trim(),souks=$('#s_souks').value.split('\n').map(s=>s.trim()).filter(Boolean);
- if(!nom||!souks.length)return toast('عمّر السمية والأسواق');
- PROFIL={nom,fonction:chipVal('s_fct')||'مقدم',annexe,souks,deviceId:(PROFIL&&PROFIL.deviceId)||uid()};await kvSet('profil',PROFIL);toast('تسجّل مزيان ✓');go('home')}
+const chipVal=grp=>{const e=document.querySelector('#'+grp+' .chip.on');return e?(e.dataset.v||e.textContent.trim()):''};
 
-VIEWS.home=async()=>{const recs=await allRecords();const unsent=recs.length;
-const ico={
- prix:`<svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2" stroke-linejoin="round"><path d="M5 24 24 5h17v17L22 41z"/><circle cx="33" cy="14" r="3.2"/></svg>`,
- ab:`<svg viewBox="0 0 48 48" fill="none" stroke="#C1272D" stroke-width="3.2" stroke-linejoin="round"><path d="M24 5 44 41H4z"/><path d="M24 18v11M24 34v1.5"/></svg>`,
- hy:`<svg viewBox="0 0 48 48" fill="none" stroke="#B26A00" stroke-width="3.2"><rect x="7" y="10" width="34" height="31" rx="4"/><path d="M7 18h34M15 5v9M33 5v9M18 25l12 11M30 25 18 36"/></svg>`,
- re:`<svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2" stroke-linejoin="round"><path d="M5 9h38v24H21l-10 8v-8H5z"/><path d="M13 18h22M13 25h13"/></svg>`,
- hi:`<svg viewBox="0 0 48 48" fill="none" stroke="#006233" stroke-width="3.2"><path d="M6 40h36M10 34l9-11 8 6 11-15"/></svg>`,
- se:`<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"><path d="M6 24 42 7 32 42l-8-14z"/><path d="M24 28 42 7"/></svg>`};
-return `${header('السلام، '+esc(PROFIL.fonction)+' '+esc(PROFIL.nom.split(' ')[0]),esc(PROFIL.annexe||'عين السوق')+' — '+new Date().toLocaleDateString('fr-MA'),false)}<main>
-<div class="card row"><span>الإشعارات</span>${unsent?`<span class="badge b-amber">${unsent} كيتسناو يتصيفطو</span>`:`<span class="badge b-green">كلشي تصيفط</span>`}</div>
+/* ---------- Connexion ---------- */
+VIEWS.login=async()=>`<div class="login"><div class="head"><div class="logo">${LOGO}</div><h1>عين السوق</h1><p>تطبيق أعوان السلطة بالأسواق الأسبوعية</p></div>
+<div class="card" style="padding:18px 18px 20px">
+<b style="font-size:17px;color:var(--navy)">تسجيل الدخول</b>
+<label class="l">اسم المستخدم</label><input id="l_id" dir="ltr" autocomplete="username" autocapitalize="none" placeholder="aux01">
+<label class="l">كلمة المرور</label><input id="l_pw" dir="ltr" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')connexion()">
+<div id="l_err"></div>
+<button class="btn" id="l_btn" onclick="connexion()">دخول</button>
+<div class="mute center" style="margin-top:12px">تُسلَّم الحسابات من طرف الملحقة الإدارية.</div></div>
+<div class="center"><button class="chip" style="font-size:13px" onclick="importerConfig()">تحديث الإعدادات من ملف الملحقة</button></div></div>`;
+async function connexion(){const id=$('#l_id').value.trim().toLowerCase(),pw=$('#l_pw').value;const err=t=>$('#l_err').innerHTML=`<div class="err">${t}</div>`;
+ const bl=(await kvGet('blocage'))||{n:0,t:0};if(bl.t>Date.now())return err('محاولات كثيرة. يُرجى الانتظار دقيقة واحدة.');
+ if(!id||!pw)return err('يُرجى إدخال اسم المستخدم وكلمة المرور.');
+ $('#l_btn').disabled=true;$('#l_btn').textContent='جارٍ التحقق…';
+ const u=CFG.comptes.find(c=>c.id===id&&c.actif!==false);let ok=false;
+ if(u){ok=(await empreinte(pw,u.sel,u.iter))===u.hash}
+ if(!ok){bl.n++;if(bl.n>=5){bl.t=Date.now()+60e3;bl.n=0}await kvSet('blocage',bl);$('#l_btn').disabled=false;$('#l_btn').textContent='دخول';return err('اسم المستخدم أو كلمة المرور غير صحيحة.')}
+ await kvSet('blocage',{n:0,t:0});await kvSet('session',{id:u.id,at:Date.now()});USER=u;go('home')}
+async function deconnexion(){await kvDel('session');USER=null;go('login')}
+async function importerConfig(){const i=$('#fcfg');i.value='';i.onchange=async()=>{const f=i.files[0];if(!f)return;
+ try{const pkg=JSON.parse(await f.text());if(pkg.app!=='ain-souk-config'||!(await verifierSignature(pkg)))throw 0;const c=JSON.parse(pkg.contenu);
+  if(c.kid!==CFG.kid)throw 0;if(c.version<=CFG.version)return toast('الإعدادات محيّنة مسبقًا');await kvSet('config',c);CFG=c;toast('تم تحديث الإعدادات');render()}
+ catch(e){toast('ملف غير صالح أو غير موقّع من الملحقة')}};i.click()}
+
+/* ---------- Accueil ---------- */
+const ICO={
+ prix:`<svg viewBox="0 0 48 48" fill="none" stroke="#14284B" stroke-width="3" stroke-linejoin="round"><path d="M5 24 24 5h17v17L22 41z"/><circle cx="33" cy="14" r="3.2"/></svg>`,
+ ab:`<svg viewBox="0 0 48 48" fill="none" stroke="#B0222B" stroke-width="3" stroke-linejoin="round"><path d="M24 5 44 41H4z"/><path d="M24 18v11M24 34v1.5"/></svg>`,
+ hy:`<svg viewBox="0 0 48 48" fill="none" stroke="#9A6200" stroke-width="3"><rect x="7" y="10" width="34" height="31" rx="4"/><path d="M7 18h34M15 5v9M33 5v9M18 25l12 11M30 25 18 36"/></svg>`,
+ re:`<svg viewBox="0 0 48 48" fill="none" stroke="#0B6B45" stroke-width="3" stroke-linejoin="round"><path d="M5 9h38v24H21l-10 8v-8H5z"/><path d="M13 18h22M13 25h13"/></svg>`,
+ se:`<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"><path d="M6 24 42 7 32 42l-8-14z"/><path d="M24 28 42 7"/></svg>`};
+VIEWS.home=async()=>{const n=(await allRecords()).length;const sk=mesSouks();
+return `${header(esc(USER.fonction)+' '+esc(USER.nom),dateAr(),false)}<main>
+<div class="card row"><span class="k" style="font-size:15px;font-weight:600">الإشعارات في انتظار الإرسال</span>${n?`<span class="badge b-amber">${n}</span>`:`<span class="badge b-green">لا شيء</span>`}</div>
 <div class="tiles">
- <button class="tile" onclick="go('prix')">${ico.prix}<b>الأثمنة</b><small>سجّل ثمن السلعة</small></button>
- <button class="tile" onclick="go('abattage')">${ico.ab}<b>الذبيحة السرية</b><small>صوّر وسجّل</small></button>
- <button class="tile" onclick="go('hygiene')">${ico.hy}<b>النظافة والسلعة</b><small>فايتة التاريخ ولا خامجة</small></button>
- <button class="tile" onclick="go('reclamation')">${ico.re}<b>شكاية</b><small>شكاية ديال مواطن</small></button>
- <button class="tile wide" style="background:var(--green);color:#fff;border:none" onclick="go('envoi')">${ico.se}<div style="text-align:right"><b style="color:#fff">صيفط للملحقة</b><br><small style="color:#E1F2E8">${unsent?unsent+' تسجيل كيتسناو':'ما كاين والو جديد'}</small></div></button>
-</div><div class="mute center" style="margin-top:14px">العون كيبلّغ فقط. التحليل والقرار والمعاينة كيرجعو للسلطة المختصة.</div></main>`};
+ <button class="tile" onclick="go('prix')">${ICO.prix}<b>الأسعار</b><small>تسجيل أسعار المواد</small></button>
+ <button class="tile" onclick="go('abattage')">${ICO.ab}<b>الذبيحة السرية</b><small>إشعار مرفق بالصور</small></button>
+ <button class="tile" onclick="go('hygiene')">${ICO.hy}<b>سلامة المواد</b><small>مواد منتهية الصلاحية أو فاسدة</small></button>
+ <button class="tile" onclick="go('reclamation')">${ICO.re}<b>شكاية</b><small>شكاية مواطن بالسوق</small></button>
+ <button class="tile wide" onclick="go('envoi')">${ICO.se}<div style="text-align:right"><b>الإرسال إلى الملحقة الإدارية</b><br><small>دون إنترنت: بلوتوث، مشاركة قريبة، رمز QR</small></div></button>
+</div>
+<div class="card" style="margin-top:14px"><b style="font-size:14px;color:var(--navy)">الأسواق المسندة إليكم</b><div class="mute" style="margin-top:4px">${sk.map(s=>esc('سوق '+s.ar)+(s.jour?' ('+JOURS[s.jour]+')':'')).join('، ')||'لا توجد أسواق مسندة. يُرجى مراجعة الملحقة.'}</div></div>
+<div class="mute center" style="margin-top:6px;line-height:1.8">يقتصر دور العون على التبليغ،<br>أما التحليل والقرار والمعاينة فمن اختصاص السلطة المختصة.</div></main>`};
 
-function soukChips(id,cur){return `<div class="chips" id="${id}">${PROFIL.souks.map(s=>`<button class="chip ${s===cur?'on':''}" onclick="pickChip(this,'${id}')">${esc(s)}</button>`).join('')}</div>`}
+/* Souks : choix uniquement dans la liste préétablie */
+function soukChoix(id){const sk=mesSouks();return `<div class="chips" id="${id}">${sk.map((s,i)=>`<button class="chip ${i===0?'on':''}" data-v="${s.id}" onclick="pickChip(this,'${id}')">سوق ${esc(s.ar)}</button>`).join('')}</div>`}
+function soukSel(id){const s=soukById(chipVal(id));return s?{soukId:s.id,souk:'سوق '+s.ar}:null}
+const auteur=()=>({id:USER.id,nom:USER.nom,fonction:USER.fonction,appareil:DEVICE});
+function garde(){if(!mesSouks().length){toast('لا توجد أسواق مسندة');return false}return true}
 
-/* --- Prix : saisie seule, aucune comparaison ni alerte sur le téléphone --- */
-VIEWS.prix=async()=>{const souk=STATE.souk||PROFIL.souks[0];
-return `${header('الأثمنة','الثمن اللي كيتباع بيه أكثر، بالدرهم')}<main>
-<label class="l">السوق</label>${soukChips('p_souk',souk)}
-<label class="l">السلعة (خلّي الخاوي إلا ما لقيتيش)</label>
-${PRODUITS.map(p=>`<div class="prod"><div class="dot" style="background:${p.col}">${p.a[0]}</div><div class="n"><b>${p.a}</b><small>${p.f} — الدرهم / ${p.u}</small></div><input inputmode="decimal" id="in_${p.c}" placeholder="—"></div>`).join('')}
-<label class="l">ملاحظة (اختياري)</label><textarea id="p_note" placeholder="مثلا: السلعة قليلة اليوم"></textarea>
-</main><div class="bottom"><button class="btn" onclick="savePrix()">سجّل الأثمنة ✓</button></div>`};
-async function savePrix(){const souk=chipVal('p_souk');const items=[];
+/* --- Prix --- */
+VIEWS.prix=async()=>`${header('الأسعار','سعر البيع الأكثر تداولًا، بالدرهم')}<main>
+<label class="l">السوق</label>${soukChoix('p_souk')}
+<label class="l">المواد <span class="mute" style="font-weight:400">(تُترك الخانة فارغة إذا كانت المادة غير متوفرة)</span></label>
+${PRODUITS.map(p=>`<div class="prod"><div class="dot" style="background:${p.col}"></div><div class="n"><b>${p.a}</b><small>الدرهم ${p.u}</small></div><input inputmode="decimal" id="in_${p.c}" placeholder="—"></div>`).join('')}
+<label class="l">ملاحظة <span class="mute" style="font-weight:400">(اختيارية)</span></label><textarea id="p_note" placeholder="مثال: قلة العرض اليوم"></textarea>
+</main><div class="bottom"><button class="btn" onclick="savePrix()">تسجيل الأسعار</button></div>`;
+async function savePrix(){if(!garde())return;const items=[];
  for(const p of PRODUITS){const v=parseFloat(($('#in_'+p.c).value||'').replace(',','.'));if(!isNaN(v)&&v>0)items.push({c:p.c,p:v})}
- if(!items.length)return toast('دخّل على الأقل ثمن واحد');
- await putRecord({id:uid(),type:'prix',souk,createdAt:new Date().toISOString(),auteur:PROFIL,data:{items,note:$('#p_note').value.trim()},photos:[],gps:null,sent:false});
- toast('تسجّل ✓');go('home')}
+ if(!items.length)return toast('يُرجى إدخال سعر واحد على الأقل');
+ await putRecord({id:uid(),type:'prix',...soukSel('p_souk'),createdAt:new Date().toISOString(),auteur:auteur(),data:{items,note:$('#p_note').value.trim()},photos:[],gps:null});
+ toast('تم التسجيل');go('home')}
 
-/* --- Photos (composant) --- */
-let PHOTOS=[];
-function photosHTML(){return `<div class="photos" id="photos">${PHOTOS.map((p,i)=>`<div class="ph"><img src="${p}" onclick="zoom(${i})"><button onclick="PHOTOS.splice(${i},1);document.getElementById('photos').outerHTML=photosHTML()">×</button></div>`).join('')}<div class="ph add" onclick="addPhoto()"><span>+</span>زيد تصويرة</div></div>`}
+/* --- Photos et position --- */
+let PHOTOS=[],GPS=null;
+function photosHTML(){return `<div class="photos" id="photos">${PHOTOS.map((p,i)=>`<div class="ph"><img src="${p}" onclick="zoom(${i})"><button onclick="PHOTOS.splice(${i},1);$('#photos').outerHTML=photosHTML()">×</button></div>`).join('')}<div class="ph add" onclick="addPhoto()"><span>+</span>إضافة صورة</div></div>`}
 async function addPhoto(){const p=await takePhoto();if(p){PHOTOS.push(p);$('#photos').outerHTML=photosHTML()}}
 function zoom(i){const m=document.createElement('div');m.className='modal';m.innerHTML=`<img src="${PHOTOS[i]}">`;m.onclick=()=>m.remove();document.body.appendChild(m)}
-let GPS=null;
-function gpsHTML(){return `<div class="gps" id="gps" onclick="doGPS()">📍 ${GPS?`البلاصة تسجلات (${GPS.lat}, ${GPS.lng})`:'ضغط هنا باش تسجل البلاصة (GPS)'}</div>`}
-async function doGPS(){$('#gps').textContent='كنقلب على البلاصة...';GPS=await getGPS();$('#gps').outerHTML=gpsHTML();if(!GPS)toast('ما قدرتش نلقى البلاصة')}
+function gpsHTML(){return `<div class="gps" id="gps" onclick="doGPS()">📍 ${GPS?`تم تسجيل الموقع الجغرافي`:'اضغط هنا لتسجيل الموقع الجغرافي'}</div>`}
+async function doGPS(){$('#gps').textContent='جارٍ تحديد الموقع…';GPS=await getGPS();$('#gps').outerHTML=gpsHTML();if(!GPS)toast('تعذّر تحديد الموقع')}
 
 /* --- Abattage clandestin --- */
 let NB=1;
-VIEWS.abattage=async()=>{PHOTOS=[];GPS=null;NB=1;return `${header('الذبيحة السرية','إشعار — صوّر 3 تصاور على الأقل')}<main>
-<label class="l">السوق</label>${soukChips('a_souk',PROFIL.souks[0])}
-<label class="l">التصاور</label>${photosHTML()}
-<label class="l">النوع</label><div class="chips" id="a_esp">${['غنم','بگري','معز','دجاج','آخر'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'a_esp')">${e}</button>`).join('')}</div>
-<label class="l">شحال من ذبيحة</label><div class="card stepper"><button onclick="NB=Math.max(1,NB-1);$('#nb').textContent=NB">−</button><b id="nb">1</b><button onclick="NB++;$('#nb').textContent=NB">+</button></div>
-<label class="l">واش فيها الطابع ديال البيطري؟</label><div class="chips" id="a_tab"><button class="chip" onclick="pickChip(this,'a_tab')">آه، فيها</button><button class="chip on red" onclick="pickChip(this,'a_tab')">لا، ما فيهاش</button></div>
-<label class="l">البلاصة</label>${gpsHTML()}<input id="a_lieu" style="margin-top:8px" placeholder="وصف البلاصة: مثلا مور الرحبة ديال الغنم">
-<label class="l">ملاحظة</label><textarea id="a_note" placeholder="شنو شفتي؟ شكون كان كيبيع؟ (بلا أسماء إلا ما كانش ضروري)"></textarea>
-</main><div class="bottom"><button class="btn red" onclick="saveAbattage()">سجّل الإشعار ✓</button></div>`};
-async function saveAbattage(){if(!PHOTOS.length)return toast('خاص على الأقل تصويرة وحدة');
- await putRecord({id:uid(),type:'abattage',souk:chipVal('a_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{espece:chipVal('a_esp'),nombre:NB,estampille:chipVal('a_tab').startsWith('آه'),lieu:$('#a_lieu').value.trim(),note:$('#a_note').value.trim()},photos:PHOTOS.slice(),gps:GPS,sent:false});
- toast('تسجّل الإشعار ✓');go('home')}
+VIEWS.abattage=async()=>{PHOTOS=[];GPS=null;NB=1;return `${header('الذبيحة السرية','إشعار — يُرجى التقاط ثلاث صور على الأقل')}<main>
+<label class="l">السوق</label>${soukChoix('a_souk')}
+<label class="l">الصور</label>${photosHTML()}
+<label class="l">نوع الذبيحة</label><div class="chips" id="a_esp">${['أغنام','أبقار','ماعز','دواجن','أخرى'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'a_esp')">${e}</button>`).join('')}</div>
+<label class="l">عدد الذبائح</label><div class="card stepper"><button onclick="NB=Math.max(1,NB-1);$('#nb').textContent=NB">−</button><b id="nb">1</b><button onclick="NB++;$('#nb').textContent=NB">+</button></div>
+<label class="l">هل تحمل الذبيحة طابع المصالح البيطرية؟</label><div class="chips" id="a_tab"><button class="chip" data-v="oui" onclick="pickChip(this,'a_tab')">نعم</button><button class="chip on red" data-v="non" onclick="pickChip(this,'a_tab')">لا</button></div>
+<label class="l">المكان</label>${gpsHTML()}<input id="a_lieu" style="margin-top:8px" placeholder="وصف المكان، مثال: خلف رحبة الأغنام">
+<label class="l">ملاحظات</label><textarea id="a_note" placeholder="ما الذي عاينته؟ (دون ذكر الأسماء إلا عند الضرورة)"></textarea>
+</main><div class="bottom"><button class="btn red" onclick="saveAbattage()">تسجيل الإشعار</button></div>`};
+async function saveAbattage(){if(!garde())return;if(!PHOTOS.length)return toast('يجب إرفاق صورة واحدة على الأقل');
+ await putRecord({id:uid(),type:'abattage',...soukSel('a_souk'),createdAt:new Date().toISOString(),auteur:auteur(),data:{espece:chipVal('a_esp'),nombre:NB,estampille:chipVal('a_tab')==='oui',lieu:$('#a_lieu').value.trim(),note:$('#a_note').value.trim()},photos:PHOTOS.slice(),gps:GPS});
+ toast('تم تسجيل الإشعار');go('home')}
 
-/* --- Hygiène / produits --- */
-VIEWS.hygiene=async()=>{PHOTOS=[];GPS=null;return `${header('النظافة والسلعة','سلعة فايتة التاريخ، خامجة، ولا بلا تبريد')}<main>
-<label class="l">السوق</label>${soukChips('h_souk',PROFIL.souks[0])}
-<label class="l">شنو المشكل؟</label><div class="chips" id="h_type">${['فايتة التاريخ','سلعة خامجة','بلا تبريد','البلاصة موسخة'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'h_type');expUI()">${e}</button>`).join('')}</div>
-<label class="l">صوّر السلعة والتيكيت ديال التاريخ</label>${photosHTML()}
-<label class="l">نوع السلعة</label><select id="h_prod">${['منتوجات الحليب','لحم ولا حوت','معلبات','مشروبات','حلويات','خضرة وفواكه','آخر'].map(x=>`<option>${x}</option>`).join('')}</select>
-<div id="expbox"><label class="l">التاريخ اللي مكتوب على التيكيت</label><input type="date" id="h_date"></div>
-<label class="l">الكمية التقريبية</label><input id="h_qte" placeholder="مثلا: 30 علبة">
-<label class="l">ملاحظة</label><textarea id="h_note"></textarea>
-</main><div class="bottom"><button class="btn" onclick="saveHygiene()">سجّل ✓</button></div>`};
-function expUI(){$('#expbox').style.display=chipVal('h_type')==='فايتة التاريخ'?'':'none'}
-async function saveHygiene(){const type=chipVal('h_type');const d=$('#h_date').value;if(type==='فايتة التاريخ'&&!d)return toast('دخّل التاريخ اللي على التيكيت');if(!PHOTOS.length)return toast('صوّر السلعة عافاك');
- await putRecord({id:uid(),type:'hygiene',souk:chipVal('h_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{probleme:type,produit:$('#h_prod').value,datePeremption:type==='فايتة التاريخ'?d:null,quantite:$('#h_qte').value.trim(),note:$('#h_note').value.trim()},photos:PHOTOS.slice(),gps:null,sent:false});
- toast('تسجّل مزيان ✓');go('home')}
+/* --- Hygiène et sécurité des produits --- */
+VIEWS.hygiene=async()=>{PHOTOS=[];return `${header('سلامة المواد','مواد منتهية الصلاحية، فاسدة، أو دون تبريد')}<main>
+<label class="l">السوق</label>${soukChoix('h_souk')}
+<label class="l">طبيعة المخالفة</label><div class="chips" id="h_type">${[['perime','مادة منتهية الصلاحية'],['avarie','مادة فاسدة'],['froid','غياب التبريد'],['sale','مكان غير نظيف']].map(([v,e],i)=>`<button class="chip ${i===0?'on':''}" data-v="${v}" onclick="pickChip(this,'h_type');expUI()">${e}</button>`).join('')}</div>
+<label class="l">صور المادة وملصق تاريخ الصلاحية</label>${photosHTML()}
+<label class="l">نوع المادة</label><select id="h_prod">${['مشتقات الحليب','لحوم أو أسماك','معلبات','مشروبات','حلويات','خضر وفواكه','أخرى'].map(x=>`<option>${x}</option>`).join('')}</select>
+<div id="expbox"><label class="l">تاريخ انتهاء الصلاحية المدوّن على الملصق</label><input type="date" id="h_date" dir="ltr"></div>
+<label class="l">الكمية التقريبية</label><input id="h_qte" placeholder="مثال: 30 علبة">
+<label class="l">ملاحظات</label><textarea id="h_note"></textarea>
+</main><div class="bottom"><button class="btn" onclick="saveHygiene()">تسجيل الإشعار</button></div>`};
+const PROB={perime:'فايتة التاريخ',avarie:'سلعة خامجة',froid:'بلا تبريد',sale:'البلاصة موسخة'}; // libellés historiques attendus par le poste
+const PROB_AR={perime:'مادة منتهية الصلاحية',avarie:'مادة فاسدة',froid:'غياب التبريد',sale:'مكان غير نظيف'};
+function expUI(){$('#expbox').style.display=chipVal('h_type')==='perime'?'':'none'}
+async function saveHygiene(){if(!garde())return;const t=chipVal('h_type');const d=$('#h_date').value;if(t==='perime'&&!d)return toast('يُرجى إدخال تاريخ انتهاء الصلاحية');if(!PHOTOS.length)return toast('يُرجى تصوير المادة');
+ await putRecord({id:uid(),type:'hygiene',...soukSel('h_souk'),createdAt:new Date().toISOString(),auteur:auteur(),data:{code:t,probleme:PROB_AR[t],produit:$('#h_prod').value,datePeremption:t==='perime'?d:null,quantite:$('#h_qte').value.trim(),note:$('#h_note').value.trim()},photos:PHOTOS.slice(),gps:null});
+ toast('تم تسجيل الإشعار');go('home')}
 
 /* --- Réclamation --- */
-VIEWS.reclamation=async()=>{PHOTOS=[];return `${header('شكاية','شكاية ديال مواطن فالسوق')}<main>
-<label class="l">السوق</label>${soukChips('r_souk',PROFIL.souks[0])}
-<label class="l">على شنو الشكاية؟</label><div class="chips" id="r_type">${['الثمن ما معلقش','ثمن غالي بزاف','الميزان ماشي مضبوط','سلعة خامجة','النظافة','حاجة أخرى'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'r_type')">${e}</button>`).join('')}</div>
-<label class="l">شرح الشكاية</label><textarea id="r_desc" placeholder="شنو قال المواطن؟"></textarea>
-<label class="l">تصويرة (اختياري)</label>${photosHTML()}
-<label class="l">رقم التلفون ديال المشتكي (اختياري)</label><input id="r_tel" inputmode="tel" style="direction:ltr;text-align:right" placeholder="06...">
-</main><div class="bottom"><button class="btn" onclick="saveRecl()">سجّل الشكاية ✓</button></div>`};
-async function saveRecl(){const desc=$('#r_desc').value.trim();if(!desc)return toast('كتب شنو هي الشكاية');const n=((await kvGet('nrecl'))||0)+1;await kvSet('nrecl',n);
- await putRecord({id:uid(),type:'reclamation',souk:chipVal('r_souk'),createdAt:new Date().toISOString(),auteur:PROFIL,data:{numero:(PROFIL.deviceId||'').slice(-3).toUpperCase()+'-'+String(n).padStart(4,'0'),objet:chipVal('r_type'),description:desc,telephone:$('#r_tel').value.trim()},photos:PHOTOS.slice(),gps:null,sent:false});
- toast('تسجّلات الشكاية ✓');go('home')}
+VIEWS.reclamation=async()=>{PHOTOS=[];return `${header('شكاية','شكاية مواطن بالسوق')}<main>
+<label class="l">السوق</label>${soukChoix('r_souk')}
+<label class="l">موضوع الشكاية</label><div class="chips" id="r_type">${['عدم إشهار الأسعار','ارتفاع مفرط في الأسعار','عدم ضبط الميزان','مادة فاسدة','النظافة','موضوع آخر'].map((e,i)=>`<button class="chip ${i===0?'on':''}" onclick="pickChip(this,'r_type')">${e}</button>`).join('')}</div>
+<label class="l">مضمون الشكاية</label><textarea id="r_desc" placeholder="ما الذي صرّح به المواطن؟"></textarea>
+<label class="l">صورة <span class="mute" style="font-weight:400">(اختيارية)</span></label>${photosHTML()}
+<label class="l">رقم هاتف المشتكي <span class="mute" style="font-weight:400">(اختياري)</span></label><input id="r_tel" inputmode="tel" dir="ltr" placeholder="06…">
+</main><div class="bottom"><button class="btn" onclick="saveRecl()">تسجيل الشكاية</button></div>`};
+async function saveRecl(){if(!garde())return;const desc=$('#r_desc').value.trim();if(!desc)return toast('يُرجى كتابة مضمون الشكاية');const n=((await kvGet('nrecl'))||0)+1;await kvSet('nrecl',n);
+ await putRecord({id:uid(),type:'reclamation',...soukSel('r_souk'),createdAt:new Date().toISOString(),auteur:auteur(),data:{numero:USER.id.toUpperCase()+'-'+String(n).padStart(4,'0'),objet:chipVal('r_type'),description:desc,telephone:$('#r_tel').value.trim()},photos:PHOTOS.slice(),gps:null});
+ toast('تم تسجيل الشكاية');go('home')}
 
-/* --- Envoi vers l'annexe (fichier) --- */
-VIEWS.envoi=async()=>{const un=await allRecords();const cnt=t=>un.filter(r=>r.type===t).length;
-return `${header('صيفط للملحقة','بلا أنترنيت: كنصاوبو ملف وكنعطيوه للملحقة')}<main>
-<div class="card center"><div class="big" style="color:var(--green)">${un.length}</div><div>تسجيل كيتسناو يتصيفطو</div>
-<div class="mute" style="margin-top:6px">أثمنة: ${cnt('prix')} — ذبيحة: ${cnt('abattage')} — نظافة: ${cnt('hygiene')} — شكايات: ${cnt('reclamation')}</div></div>
-<div class="card"><b>كيفاش؟</b><div class="mute" style="font-size:15px;line-height:1.9;margin-top:6px">1. ضغط على «صاوب الملف».<br>2. الملف كيتحط فالتلفون (Download).<br>3. فالملحقة: ربط التلفون بالكابل مع البيسي، ولا صيفطو بالبلوتوث.<br>4. البيسي كيقرا الملف بوحدو.</div></div>
-<button class="btn" onclick="exporter()" ${un.length?'':'disabled style="opacity:.5"'}>صاوب الملف (${un.length}) ✓</button>
-<div class="mute center" style="margin-top:10px">من بعد الإرسال، كيتمسحو الإشعارات من التلفون.</div></main>`};
-async function exporter(){const list=await allRecords();if(!list.length)return toast('ما كاين والو');
- const payload={app:'ain-souk',version:1,exportedAt:new Date().toISOString(),auteur:PROFIL,records:list.map(r=>({...r,sent:undefined}))};
- const stamp=new Date().toISOString().slice(0,16).replace(/[-:T]/g,'');const name=`ainsouk_${(PROFIL.nom||'aux').replace(/\s+/g,'_')}_${stamp}.json`;const txt=JSON.stringify(payload);
- let ok=false;
- if(window.AndroidBridge&&AndroidBridge.saveFile){ok=AndroidBridge.saveFile(name,txt)}
- else{const f=new File([txt],name,{type:'application/json'});
-  if(navigator.canShare&&navigator.canShare({files:[f]})&&confirm('بغيتي تبارطاجي الملف (بلوتوث...)؟ — «Annuler» = تحميل عادي')){try{await navigator.share({files:[f],title:name});ok=true}catch(e){}}
+/* ---------- Transmission sans Internet ---------- */
+const MICO={
+ bt:`<svg viewBox="0 0 48 48" fill="none" stroke="#1F3A68" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M14 15l20 18-10 9V6l10 9-20 18"/></svg>`,
+ near:`<svg viewBox="0 0 48 48" fill="none" stroke="#0B6B45" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="24" r="4"/><path d="M15 15a13 13 0 0 0 0 18M33 15a13 13 0 0 1 0 18M9 9a21 21 0 0 0 0 30M39 9a21 21 0 0 1 0 30"/></svg>`,
+ qr:`<svg viewBox="0 0 48 48" fill="none" stroke="#14284B" stroke-width="3"><rect x="6" y="6" width="14" height="14"/><rect x="28" y="6" width="14" height="14"/><rect x="6" y="28" width="14" height="14"/><path d="M28 28h6v6h-6zM36 36h6v6h-6zM28 40h4M40 28v4"/></svg>`,
+ usb:`<svg viewBox="0 0 48 48" fill="none" stroke="#5E6672" stroke-width="3" stroke-linejoin="round"><rect x="16" y="4" width="16" height="14" rx="2"/><path d="M12 18h24v12a12 12 0 0 1-24 0zM24 42v4"/></svg>`};
+VIEWS.envoi=async()=>{const un=await allRecords();const cnt=t=>un.filter(r=>r.type===t).length;const ph=un.reduce((a,r)=>a+(r.photos||[]).length,0);
+return `${header('الإرسال إلى الملحقة الإدارية','دون الحاجة إلى الإنترنت')}<main>
+<div class="card center"><div class="big">${un.length}</div><div class="k" style="font-weight:600">إشعار في انتظار الإرسال</div>
+<div class="mute" style="margin-top:4px">الأسعار: ${cnt('prix')} — الذبيحة: ${cnt('abattage')} — سلامة المواد: ${cnt('hygiene')} — الشكايات: ${cnt('reclamation')}</div>
+<div style="margin-top:8px"><span class="lock">🔒 ملف مشفَّر لا يُفتح إلا بحاسوب الملحقة</span></div></div>
+${un.length?`<label class="l">اختر وسيلة الإرسال</label>
+<button class="meth" onclick="envoyer('bluetooth')">${MICO.bt}<div><b>البلوتوث</b><small>إرسال الملف مباشرة إلى حاسوب الملحقة</small></div></button>
+<button class="meth" onclick="envoyer('proximite')">${MICO.near}<div><b>المشاركة القريبة</b><small>Quick Share أو Wi-Fi Direct، دون إنترنت</small></div></button>
+<button class="meth" onclick="go('qr')">${MICO.qr}<div><b>رمز QR</b><small>يُمسح بكاميرا حاسوب الملحقة${ph?' — دون الصور ('+ph+')':''}</small></div></button>
+<button class="meth" onclick="envoyer('usb')">${MICO.usb}<div><b>الكابل (USB)</b><small>حفظ الملف في مجلد Download/AinSouk</small></div></button>`:'<div class="card center mute">لا توجد إشعارات في انتظار الإرسال.</div>'}
+<div id="confirm"></div></main>`};
+let ENVOI=null; // {ids:[], mode}
+async function preparer(sansPhotos){const list=(await allRecords()).sort((a,b)=>a.createdAt.localeCompare(b.createdAt));
+ const records=sansPhotos?list.map(r=>({...r,photos:[],photosNonTransmises:(r.photos||[]).length})):list;
+ const pkg=await chiffrer({app:'ain-souk',version:2,exportedAt:new Date().toISOString(),auteur:auteur(),records});
+ pkg.n=list.length;return {pkg,ids:list.map(r=>r.id),sansPhotos}}
+async function envoyer(mode){const {pkg,ids}=await preparer(false);const stamp=new Date().toISOString().slice(0,16).replace(/[-:T]/g,'');
+ const name=`ainsouk_${USER.id}_${stamp}.ainsouk`;const txt=JSON.stringify(pkg);let ok=false;
+ if(window.AndroidBridge){ok=mode==='usb'?AndroidBridge.saveFile(name,txt):AndroidBridge.shareFile(name,txt,mode)}
+ else{const f=new File([txt],name,{type:'application/octet-stream'});
+  if(mode!=='usb'&&navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:name});ok=true}catch(e){}}
   if(!ok){const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=name;document.body.appendChild(a);a.click();a.remove();ok=true}}
- if(ok){for(const r of list)await delRecord(r.id);toast('الملف واجد: '+list.length+' تسجيل ✓');go('home')}}
+ if(ok){ENVOI={ids,mode};confirmer()}}
+function confirmer(){$('#confirm').innerHTML=`<div class="card" style="border-color:var(--navy-2);margin-top:6px"><b style="color:var(--navy)">هل تسلّمت الملحقة الملف؟</b><div class="mute" style="margin:4px 0 2px">بعد التأكيد، تُحذف الإشعارات من الهاتف.</div>
+<button class="btn green" onclick="valider()">نعم، تم التسليم</button><button class="btn light" onclick="$('#confirm').innerHTML=''">ليس بعد</button></div>`;$('#confirm').scrollIntoView({behavior:'smooth'})}
+async function valider(){if(!ENVOI)return;const keep=ENVOI.sansPhotos;for(const id of ENVOI.ids){if(keep){const r=(await allRecords()).find(x=>x.id===id);if(r&&r.photos&&r.photos.length){r.photosSeules=true;await putRecord(r);continue}}await delRecord(id)}
+ const n=ENVOI.ids.length;ENVOI=null;toast('تم الإرسال: '+n+' إشعار');go('home')}
+
+/* --- Code QR : les fiches défilent en plusieurs codes, lus par la caméra du poste --- */
+let QRT=null;
+VIEWS.qr=async()=>{const {pkg,ids}=await preparer(true);const txt=JSON.stringify(pkg);const sid=Math.random().toString(36).slice(2,6).toUpperCase();
+ const T=600,parts=[];for(let i=0;i<txt.length;i+=T)parts.push(txt.slice(i,i+T));STATE.parts=parts.map((p,i)=>`AS2|${sid}|${i+1}|${parts.length}|${p}`);ENVOI={ids,mode:'qr',sansPhotos:true};
+ return `${header('الإرسال برمز QR','وجّه الهاتف نحو كاميرا حاسوب الملحقة')}<main>
+<div class="qrbox"><img id="qrimg" alt="QR"><div class="k" style="margin-top:6px;font-weight:700;color:var(--navy)">الرمز <span id="qri">1</span> من ${parts.length}</div><div class="prog"><i id="qrp" style="width:0"></i></div></div>
+<div class="mute center" style="margin-top:10px">تتوالى الرموز تلقائيًا. اترك الهاتف ثابتًا حتى يُعلن الحاسوب اكتمال الاستلام.${pkg.n?'':''}</div>
+<div class="mute center">الصور لا تُرسل بهذه الطريقة؛ تبقى في الهاتف إلى حين إرسالها بالبلوتوث أو الكابل.</div>
+<div id="confirm"></div>
+<button class="btn green" onclick="clearInterval(QRT);confirmer()">انتهى المسح</button></main>`};
+VIEWS.qr_after=()=>{let i=0;const P=STATE.parts;const show=()=>{const q=qrcode(0,'L');q.addData(P[i]);q.make();$('#qrimg').src=q.createDataURL(6,4);$('#qri').textContent=i+1;$('#qrp').style.width=((i+1)/P.length*100)+'%';i=(i+1)%P.length};
+ clearInterval(QRT);show();QRT=setInterval(()=>{if(VIEW!=='qr')return clearInterval(QRT);show()},900)};
 
 /* ---------- Démarrage ---------- */
-(async()=>{await openDB();PROFIL=await kvGet('profil');go(PROFIL?'home':'setup')})();
+let DEVICE;
+(async()=>{await openDB();await chargerConfig();DEVICE=(await kvGet('device'))||uid();await kvSet('device',DEVICE);
+ await document.fonts.ready.catch(()=>{});USER=await ouvrirSession();go(USER?'home':'login')})();
 </script>
 </body></html>

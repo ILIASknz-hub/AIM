@@ -11,8 +11,8 @@ android {
         applicationId = "ma.irat.ainsouk"
         minSdk = 24          // Android 7.0 et plus
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1-prototype"
+        versionCode = 3
+        versionName = "2.0"
     }
 
     buildTypes {
@@ -32,4 +32,5 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.webkit:webkit:1.11.0")   // WebViewAssetLoader : contexte sécurisé pour le chiffrement
 }
